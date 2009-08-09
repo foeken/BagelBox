@@ -1,0 +1,48 @@
+<% content_for(:header) do %>
+  Where do we get content from?
+<% end %>
+
+<h2>Content sources</h2>
+
+<p>
+  Content sources supply us with stuff to download. These can be torrent RSS feeds, FTP sites or directories.
+</p>
+
+<table class="sources_table" cellspacing="0">
+<% @content_sources.each do |source| %>
+  <tr class="<%= cycle('even','odd') %>">
+    <td width="20"><%= source.active ? image_tag("online.png") : image_tag("offline.png") %></td>
+    <td width="60%"><%= source.name %></td>
+    <td width="70"><%= source.source_type %></td>    
+    <td><%= link_to 'Show', source %></td>
+    <td><%= link_to 'Edit', edit_source_path(source) %></td>
+    <td width="50" style="text-align:right; padding-right: 10px;"><%= link_to 'Remove', source, :confirm => 'Are you sure?', :method => :delete, :class => "remove_link" %></td>
+  </tr>
+<% end %>
+</table>
+
+<h2>Filter sources</h2>
+
+<p>
+  These provide information about what we want to download and what we don't want to download.
+  For instance: Your local movies folder will likely be a negative filter source since you don't want stuff you already have. The <%= link_to "myepisodes.com", "http://myepisodes.com" %> RSS streams are a good example of a positive filter sources.
+</p>
+
+<table class="sources_table" cellspacing="0">
+<% @filter_sources.each do |source| %>
+  <tr class="<%= cycle('even','odd') %>">
+    <td width="20"><%= source.active ? image_tag("online.png") : image_tag("offline.png") %></td>
+    <td width="60%"><%= source.name %></td>
+    <td width="70"><%= source.source_type %></td>    
+    <td><%= link_to 'Show', source %></td>
+    <td><%= link_to 'Edit', edit_source_path(source) %></td>
+    <td width="50" style="text-align:right; padding-right: 10px;"><%= link_to 'Remove', source, :confirm => 'Are you sure?', :method => :delete, :class => 'remove_link' %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<p style="text-align: right">
+  <%= link_to 'Add a new source', new_source_path %>
+</p>

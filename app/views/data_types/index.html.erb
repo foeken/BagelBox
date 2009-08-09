@@ -1,0 +1,42 @@
+<% content_for(:header) do %>
+  What stuff can we expect?
+<% end %>
+
+<h2>What are file types?</h2>
+<p>
+  File types are the core of filtering sources. Each file type has a set of meta information matchers.
+  These matchers help parse a filename into useful labelled data. 
+  <br/>
+  <br/>
+  
+  For example the Video file matcher matches a filename into information like: 
+  <span class="label">Title</span>, 
+  <span class="label">Episode</span>, 
+  <span class="label">Season</span>, 
+  <span class="label">Year</span>, 
+  <span class="label">Quality</span> and 
+  <span class="label">Edition</span>. These labels can then be used in <%= link_to( "filters", data_file_filters_path) %> to specify what you are looking for.
+</p>
+<br/>
+
+<table class="data_types_table" cellspacing="0">
+  <tr>
+    <th>&nbsp;</th>
+    <th>Name</th>
+    <th>Extension</th>
+  </tr>
+
+<% @data_types.each do |data_type| %>
+  <tr class="<%= cycle('even','odd') %>">
+    <td width="20" style="text-align: center"><%= !data_type.ignore ? image_tag("online.png") : image_tag("offline.png") %></td>
+    <td><%=h data_type.name %></td>
+    <td class="variable"><%=h data_type.extension %></td>
+    <td><%= link_to 'Edit', edit_data_type_path(data_type) %></td>
+    <td width="50" style="text-align:right; padding-right: 10px;"><%= link_to 'Remove', data_type, :confirm => 'Are you sure?', :method => :delete, :class => 'remove_link' %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<p style="text-align: right;"><%= link_to 'New file type', new_data_type_path %></p>

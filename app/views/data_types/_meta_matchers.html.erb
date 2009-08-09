@@ -1,0 +1,44 @@
+<h3>Meta matchers - <%= link_to "help", "javascript:return false", :onclick => visual_effect(:toggle_blind,"meta_matcher_help") %></h3>
+<div id="meta_matcher_help" class="comment" style="display: none;">
+    
+    Meta matchers are a list of regular expressions that parse a filename or title into labelled content.
+    Each line contains either a matcher, definition, include or comment (#). Blank lines are allowed.
+    
+    <br/><br/>
+    
+    <b>Matchers</b> contain a regular expression and a set of labels. Each capture in the regex
+    should have a corresponding label. The regex and labels are seperated by the '~' character.
+    
+    <blockquote class="variable">
+      (.*?)Season.*?(\d+)~title,season
+    </blockquote>
+    
+    <b>Labels</b> can be anything you want making it completely flexible. You can use labels inside <%= link_to('filters', data_file_filters_path) %> to look for specific content. Please note that by default some labels  have special behavior. The <span class="label">episode</span>, <span class="label">season</span> and <span class="label">track</span> labels are treated as numbers, these are specified in settings.
+    
+    <br/><br/>
+    
+    <b>Definitions</b> are shorthand for commonly used variables. A good example is the 
+    <span class="label">EDITION</span> definition for video files. It contains a list 
+    of common movie editions.
+    
+    <blockquote class="variable">
+      define EDITION, "UNRATED|RATED|LIMITED"
+      <br/><br/>        
+      # Use it in a regex like this:<br/>
+      (.*?)(EDITION).*?(QUALITY)~title,edition,quality
+    </blockquote>
+    
+    Defined labels can also be used as priority labels in <%= link_to "sources", sources_path %> 
+    to compare multiple filter matches to select the best one. Make sure you name them the same but
+    lowercase.
+    
+    <br/><br/>
+    
+    <b>Includes</b> allow file types to use another file type's meta matcher. Use them like this:
+    
+    <blockquote class="variable">
+      include "Video file"
+    </blockquote>
+    <br/>
+        
+</div>

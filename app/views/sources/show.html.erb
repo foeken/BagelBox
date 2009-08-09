@@ -1,0 +1,84 @@
+<% content_for(:header) do %>
+  What do we have here?
+<% end %>
+
+<% if @source.active %>
+
+<p>
+  This page shows the current state of this source. It shows the content and if it could be parsed.
+  If a content title could not be parsed correctly you can try adapting the file type's meta matcher.
+  <br/><br/>
+  The status field indicates whether there is a content match with one or more filters. The content can
+  be accepted or rejected, there can also be no match. The matcher column states the meta matcher line 
+  that was used to parse the content.
+  <br/><br/>
+  Click parsed content to see the meta data results.
+</p>
+
+  <table class="data_files_table">
+    <tr>
+      <th>Status</th>
+      <th>Filename</th>
+      <th>Type</th>
+      <th>Category</th>
+      <th>Matcher</th>
+      <th>&nbsp;</th>
+    </tr>
+  
+    <% @source.data(:manual_scrape => true).each_with_index do |data_file,i| %>
+    
+      <% mt     = data_file.meta_data   %>
+      <% status = @source.filter_source ? [nil,nil] : data_file.run_filters %>
+    
+      <tr 
+        <% if mt[:matcher] %>
+          onclick="Effect.toggle('meta_data_<%=i%>','appear',{ duration: 0.5 })"
+        <% else %>
+          title="Content could not be matched by any meta matcher."
+        <% end %> 
+        
+        class="<%= mt[:matcher] ? "recognized #{status.first}" : "not_recognized #{status.first}" %>">
+        <% if !@source.filter_source %>
+          <td title="<%=h status.last.map(&:name).to_sentence %>"><%=h status.first %> (<%=h status.last.length %>)</td>
+        <% elsif data_file.data_file_filter %>
+          <td><%= link_to "Filter", data_file_filter_path(data_file.data_file_filter) %></td>
+        <% else %>
+          <td>&nbsp;</td>
+        <% end %>
+      
+        <td><%=h data_file.filename %></td>
+        <td><%=h data_file.data_type ? data_file.data_type.name : "Unknown" %></td>
+        <td><%=h data_file.category %></td>
+      
+        <% if mt[:matcher] %>
+          <td title="<%=h mt[:matcher][:regex] %>"><%=h mt[:matcher][:index] %></td>
+        <% else %>
+          <td>NONE</td>
+        <% end %>
+      
+        <td><%= link_to "Download", { :controller => :sources, 
+                                      :action => :download, 
+                                      :id => @source.id, 
+                                      :location => data_file.location }, :post => true %></td>
+      
+      </tr>
+      <% if mt[:matcher] %>
+        <tr id="meta_data_<%= i %>" style="display:none;">
+          <td>&nbsp;</td>
+          <td colspan="4">
+            <% mt.keys.reject{ |k| @ignored_labels.include?(k) }.each do |label| %>
+              <%=h label %>: <b><%=h mt[label] %></b><br/>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+        
+    <% end %>
+  
+  </table>
+<% else %>
+<h1>This source is inactive</h1>
+<p>
+  Inactive sources will not be scraped. Please activate the source to see results on this page.
+</p>
+<% end %>

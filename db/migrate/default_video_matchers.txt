@@ -1,0 +1,25 @@
+define QUALITY, "1080p|720p|1080i|HDTV|HD|480p|BRRIP|x264|H.264|DVDRip|DVD|DVD5|DVD-5|R5|DVDFull|PDTV|SDTV|SD|CAM|TS"
+define EDITION, "UNRATED|RATED|LIMITED"
+
+# Tv Show matchers
+^\[.*(QUALITY).*\](.*?)S(\d+)\s?E(\d+)(.*)~quality,title,season,episode
+^\[.*(QUALITY).*\](.*?)(\d+)\s?x\s?(\d+)(.*)~quality,title,season,episode
+^\[.*(QUALITY).*\](.*)~resolution,title
+
+# Season only matchers
+(.*?)Season.*?(\d+)~title,season
+(.*?)Season.*?(\d+).*?\W(QUALITY)~title,season,quality
+
+# Season and Episode matchers (S00E00,00x00)
+(.*?)S?(\d+)\s?E(\d+).*?\W(QUALITY)~title,season,episode,quality
+(.*?)S?(\d+)\s?E(\d+)~title,season,episode
+
+(.*?)(\d+)\s?x\s?(\d+).*?\W(QUALITY)~title,season,episode,quality
+(.*?)(\d+)\s?x\s?(\d+)~title,season,episode
+
+# Movie matchers
+(.*?)(EDITION).*?[\[\(]?(\d{4})[\]\)]?.*?\W(QUALITY)~title,edition,year,quality
+(.*?)[\[\(]?(\d{4})[\]\)]?.*?\W(QUALITY)~title,year,quality
+(.*?)(EDITION).*?(QUALITY)~title,edition,quality
+(.*?)\W(QUALITY)~title,quality
+(.*?)[\[\(]?(\d{4})[\]\)]?~title,year

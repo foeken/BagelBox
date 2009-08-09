@@ -1,0 +1,28 @@
+<% content_for(:header) do %>
+  <%= @data_type.name %>
+<% end %>
+
+<% form_for(@data_type) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :extension %><br />
+    <%= f.text_field :extension %>
+  </p>
+  <p>
+    <%= f.label :ignore %><br />
+    <%= f.check_box :ignore %><small>These file types are ignored in filtering, i.e: use this to skip .nfo files!</small>
+  </p>
+    
+  <%= render :partial => "meta_matchers" -%>  
+  <%= f.text_area :meta_matchers, :style => "width: 100%; font-family: courier" %>
+  
+  </div>
+  <p style="text-align: right">
+    <%= f.submit 'Update' %> or <%= link_to 'cancel', data_types_path %>
+  </p>
+<% end %>

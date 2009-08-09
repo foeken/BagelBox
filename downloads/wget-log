@@ -1,0 +1,15 @@
+--2009-08-09 21:46:27--  http://www.bt-chat.com/download1.php?id=62088
+Resolving www.bt-chat.com... 67.212.71.73, 2001:5c0:1500:b300::1:1
+Connecting to www.bt-chat.com|67.212.71.73|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 14307 (14K) [application/x-bittorrent]
+--2009-08-09 21:46:29--  http://www.bt-chat.com/download1.php?id=62088
+Reusing existing connection to www.bt-chat.com:80.
+HTTP request sent, awaiting response... 200 OK
+Length: 14307 (14K) [application/x-bittorrent]
+Saving to: `Girlfriend Experience (2008) DvdRip [Xvid]-X.torrent'
+
+     0K .......... ...                                        100% 34.6K=0.4s
+
+2009-08-09 21:46:30 (34.6 KB/s) - `Girlfriend Experience (2008) DvdRip [Xvid]-X.torrent' saved [14307/14307]
+

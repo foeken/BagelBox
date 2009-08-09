@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  expression: MyText
+  singleton: false
+
+two:
+  name: MyString
+  expression: MyText
+  singleton: false

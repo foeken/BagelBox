@@ -1,0 +1,3 @@
+\[ (.*) \]\[ (\d+)x(\d+) \]\[ (.*?) \]\[ (.*?) \]~title,season,episode,description,air_date
+
+include "Video file"

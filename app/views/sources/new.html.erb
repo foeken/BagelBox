@@ -1,0 +1,156 @@
+<% content_for(:header) do %>
+  New source
+<% end %>
+
+<% form_for(@source) do |f| %>
+  <%= f.error_messages %>
+
+  <table class="input_table">
+
+    <tr>
+      <th colspan="2">General information</th>
+    </tr>
+    
+    <tr>
+      <td width="170"><%= f.label :name %></td>
+      <td><%= f.text_field :name %></td>
+    </tr>
+    
+    <tr>
+      <td><%= f.label :location %></td>
+      <td>
+        <%= f.text_field :location %>
+        <small>
+          Full http:// or ftp:// path to the source.
+        </small>
+      </td>
+    </tr>
+    
+    <tr>
+      <td><%= f.label :category %></td>
+      <td>
+        <%= f.select :category, DataType::CATEGORIES, :include_blank => true %>
+        <small>
+          Leave blank to auto-guess.
+        </small>
+      </td>
+    </tr>
+    
+    <tr>
+      <td><%= f.label :active %></td>
+      <td>
+        <%= f.check_box :active %>
+        <small>
+          Only active sources are scraped.
+        </small>
+      </td>
+    </tr>
+    
+    <tr>
+      <th colspan="2"><br/>Settings</th>
+    </tr>
+    
+    <tr>
+      <td><%= f.label :source_type %></td>
+      <td><%= f.select :source_type, SourceTypes::SourceType::AVAILABLE %></td>
+    </tr>
+    
+    <tr>
+      <td><%= f.label :scrape_interval %></td>
+      <td>
+        <%= f.text_field :scrape_interval %>
+        <small>
+          Default setting is 300 seconds.
+        </small>
+      </td>
+    </tr>
+    
+    <tr>
+      <td><%= f.label :download_location %></td>
+      <td>
+        <%= f.text_field :download_location %>
+        <small>
+          Where do we download the .torrent or actual files to? Make sure I have enough rights!
+        </small>
+      </td>
+    </tr>
+    
+    <tr>
+      <td><%= f.label :priority %></td>
+      <td>
+        <%= f.text_field :priority %>
+        <small>
+          Which source has more quality? The lowest number comes first.
+        </small>
+      </td>
+    </tr>
+    
+    <tr>
+      <td><%= f.label :priority_labels %></td>
+      <td>
+        <%= f.text_field :priority_labels %>
+        <small>
+          When we get to choose between multiple dowloads that both match, 
+          which labels do we use to make the decision? Labels are defined inside
+          <%= link_to "File types", data_types_path -%>.
+        </small>
+      </td>
+    </tr>
+    
+    <tr>
+      <th colspan="2"><br/>Filter provider settings</th>
+    </tr>
+    
+    <tr>
+      <td><%= f.label :filter_source %></td>
+      <td>
+        <%= f.check_box :filter_source %>
+        <small>
+          Enable for filter providers.
+        </small>
+      </td>
+    </tr>
+    
+    <tr>
+      <td><%= f.label :negative %></td>
+      <td>
+        <%= f.check_box :negative %>
+        <small>
+          Enable to generate filter about what <b>not</b> to download
+        </small>
+      </td>
+    </tr>
+    
+    <tr>
+      <td><%= f.label :filter_labels %></td>
+      <td>
+        <%= f.text_field :filter_labels %>
+        <small>
+          Select which of the provided labels to use for filters. Labels are defined inside
+          <%= link_to "File types", data_types_path -%>.
+        </small>
+      </td>
+    </tr>
+    
+    <tr>
+      <th colspan="2"><br/>Advanced settings - <%= link_to "help", "javascript:return false", :onclick => visual_effect(:toggle_blind, "advanced_options") %></th>
+    </tr>
+    
+    <tr>
+      <td colspan="2" class="comment">      
+        <%= render :partial => 'advanced_options' %>
+      </td>
+    </tr>
+    
+    <tr>
+      <td><%= f.label :options %></td>
+      <td><%= f.text_area :options %></td>
+    </tr>
+    
+  </table>
+  
+
+  <p style="text-align: right;">
+    <%= f.submit 'Create' %> or <%= link_to 'cancel', sources_path %>
+  </p>
+<% end %>

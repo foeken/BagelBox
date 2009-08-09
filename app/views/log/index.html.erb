@@ -1,0 +1,11 @@
+<% content_for(:header) do %>
+  What happened?
+<% end %>
+
+<p>
+  The log files can be found in 'log/scraper.txt', they are rotated every day. Below is today's log.
+</p>
+
+<textarea style="width:100%;" rows="30">
+<%= File.read("log/scraper.txt").split(/\r?\n/).reverse.join("\n") -%>
+</textarea>

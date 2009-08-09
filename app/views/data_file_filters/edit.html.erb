@@ -1,0 +1,55 @@
+<% content_for(:header) do %>
+  <%= @data_file_filter.name %>
+<% end %>
+
+<% form_for(@data_file_filter) do |f| %>
+  <%= f.error_messages %>
+
+    <table class="input_table">
+      
+      <tr id="custom_field">
+        <td colspan="2" style="padding:0px;">
+          <table style="width:100%">
+            <tr>
+              <td width="170" style="vertical-align:middle;"><%= f.label :name %></td>
+              <td><%= f.text_field :name %></td>
+            </tr>
+            <tr>
+              <td><%= f.label :expression %></td>
+              <td>
+                <%= f.text_area :expression, :rows => 10 %>
+                <small>The expression field accepts any label/value combination. Specify them like this: 'label:"value"'. The value may be a regular expression.<br/>Labels are defined in <%= link_to "File types", data_types_path %>.</small>
+              </td>
+            </tr>
+          </table>        
+      </tr>
+
+      <tr>
+        <td width="170"><%= f.label :singleton, "One shot?" %></td>
+        <td>
+          <%= f.check_box :singleton %>
+          <small>One shot filters get deactivated once they match, use for single episodes or tracks.</small>
+        </td>
+      </tr>
+
+      <tr>
+        <td width="170"><%= f.label :negative %></td>
+        <td>
+          <%= f.check_box :negative %>
+          <small>Enable if you <b>DON'T</b> want content that matches.</small>
+        </td>
+      </tr>
+
+      <tr>
+        <td width="170"><%= f.label :active %></td>
+        <td>
+          <%= f.check_box :active %><small>Only active filters are applied during scraping.</small>
+        </td>
+      </tr>
+
+  </table>
+  
+  <p style="text-align:right;">
+    <%= f.submit 'Update' %> or <%= link_to 'cancel', data_file_filters_path %>
+  </p>
+<% end %>

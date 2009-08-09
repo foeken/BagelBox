@@ -1,0 +1,145 @@
+body {
+	font-family: "Myriad Pro", "Helvetica Neue";
+	background-image: url('/images/wrapper.png');
+	background-repeat: repeat-x;
+	background-position: 0px -250px;
+	padding: 0px 30px 0px 20px;
+	line-height: 130%;
+}
+
+p {
+	color: #585858;
+}
+
+a {
+	color: #39c;
+	cursor: pointer;
+}
+
+.remove_link {
+	color: crimson;
+}
+ 
+a:focus,
+a:hover {
+	text-decoration: underline;
+}
+ 
+a:active {
+	color: #069;
+}
+
+#header {
+	height: 100px;
+	line-height: 80px;
+	font-size: 30pt;
+	margin: 0px 0px 30px 0px;	
+	color: white;
+	text-shadow: black 1px 1px 1px;
+}
+
+#main_menu {
+	list-style: none;
+	padding: 0px;
+	margin: -35px 0px 0px 0px;
+	color: #ccc;
+	float: right;
+}
+
+#main_menu li {
+	display: inline;
+}
+
+.comment {
+	color: #6F6F6F;
+}
+
+.variable {
+	font-family: 'Courier New';
+	font-size: 10pt;
+}
+
+.label {
+	font-family: 'Courier New';
+	font-weight: bold;
+	background: #FDFFE5;
+}
+
+blockquote {
+	margin: 10px 0px 10px 10px;
+	background: #F2F2F2;
+	border: 1px solid #ddd;
+	padding: 5px;
+}
+
+small {
+	color: #999;
+	font-size: 10pt;
+}
+
+pre {
+	background: #F2F2F2;
+	border: 1px solid #ddd;
+	padding: 10px;
+}
+
+.input_table { width: 100%; }
+.input_table td { padding: 10px; vertical-align: top;}
+
+.input_table th { 
+	font-size: 16pt; 
+	text-align: left; 
+	padding: 10px 10px 10px 10px; 
+	vertical-align: middle; 
+	border-bottom: 1px solid #ddd;
+}
+
+.sources_table { width: 100%; }
+.sources_table td { padding: 4px; }
+
+.data_types_table { width: 100%; }
+.data_types_table td { padding: 4px; }
+.data_types_table th { text-align: left; }
+
+.even { background: #F2F2F2; }
+.odd {}
+
+.data_files_table { width: 100%; }
+.data_files_table td { padding: 4px; }
+
+.data_file_filter_table { width: 100%; }
+.data_file_filter_table td { padding: 4px; border-bottom: 2px solid #fff;}
+.data_file_filter_table th { text-align: left; }
+
+.recognized, .positive_filter { 
+	background: #F2F2F2; 
+	border-bottom: 1px solid #ddd; 
+}
+
+.not_recognized, .negative_filter { 
+	background: #FFD2DA; 
+	border-bottom: 1px solid #ddd;
+}
+
+.accepted { background-color: #DEFFBC; }
+.rejected { background-color: #D71930; }
+.no_match { }
+
+fieldset {
+	border: 1px solid #ddd;
+}
+
+input[type='text'],textarea {
+	border: 1px solid #ddd;
+	outline: 0;
+	padding: 5px;
+	width: 100%;
+}
+
+textarea {
+	font-family: "Courier New";
+}
+
+input[type='text'] {
+	font-size: 16pt;
+}

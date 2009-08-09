@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  extension: MyString
+  meta_matchers: MyText
+
+two:
+  name: MyString
+  extension: MyString
+  meta_matchers: MyText

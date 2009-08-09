@@ -1,0 +1,101 @@
+class Scraper
+  
+  def self.run options={}
+    SCRAPER_LOG.info( "Started scraping run" )        
+    gather_filters(options)
+    filter_and_download(options)
+  end
+  
+  # Run through the various defined sources and scrape them for content to download.
+  def self.filter_and_download options={}   
+    accepted_data_files = []
+    successful_filters  = []
+    data_files          = scrapable_sources(false,options).collect(&:data).flatten
+    
+    SCRAPER_LOG.info( "Running filters on #{data_files.length} items" )
+    
+    data_files.each do |data_file|
+      status = data_file.run_filters
+      if status.first == :accepted
+        accepted_data_files << data_file
+        successful_filters += status.last
+      end
+    end    
+    
+    # Unfortunately there is a high risk of duplicate data_files in this list as new
+    # torrents might spring up in multiple locations.    
+    successful_filters.each do |filter|
+      data_file_group = accepted_data_files.select{ |d| filter.match(d) == :positive_match }
+      
+      next if data_file_group.empty? # Can happen if they were handled before (with overlapping filters)
+      
+      # remove files from the accepted array, they can only be in ONE group.
+      accepted_data_files -= data_file_group
+      
+      # Handle the selection of which file to download now...
+      if data_file_group.length == 1
+        SCRAPER_LOG.info( "Single match for '#{filter.to_s}' on #{data_file_group.first.source.name}" )
+        data_file_group.first.download
+      else        
+        SCRAPER_LOG.info( "Multiple matches for '#{filter.to_s}' on #{data_file_group.collect{ |s| s.source.name }.to_sentence}" )
+        
+        sorted_data_file_group = DataFile.sort(data_file_group)
+        
+        SCRAPER_LOG.info( "Selected match with highest priority: #{sorted_data_file_group.first.source.name}" )                
+        
+        sorted_data_file_group.first.download
+      end      
+    end
+    
+    # We assume that each of the successful singular filters have been handled and can be deactivated.
+    successful_filters = successful_filters.uniq.select{ |f| f.singleton }
+    SCRAPER_LOG.info( "Deactivating #{successful_filters.length} succesful singleton filter(s)" )
+    successful_filters.each{ |f| f.deactivate }
+    
+    return true
+    
+  end
+  
+  # Run through the various filter sources and define new filters as we go along
+  def self.gather_filters options={}
+    scrapable_sources(true,options).each do |source|
+      source.data.each do |data_file|
+        begin
+          unless data_file.data_file_filter
+            data_file_filter = data_file.to_data_file_filter
+            
+            if data_file_filter
+              data_file_filter.source = source
+              data_file_filter.save!
+              SCRAPER_LOG.info( "Created new filter from '#{data_file.source.name}': #{data_file_filter.to_s}" )
+            else
+              SCRAPER_LOG.info( "Skipped new filter from '#{data_file.source.name}', no match" )
+            end
+          end
+        rescue
+          SCRAPER_LOG.info( "Skipped new filter from '#{data_file.source.name}': #{data_file_filter.to_s}" )
+          # Some filters might not be allowed (blank expressions, etc..) We don't care.
+        end
+      end
+    end
+  end
+  
+  # Select the sources that may be scraped at this moment
+  def self.scrapable_sources filter, options={}
+    sources = Source.find_all_by_filter_source_and_active(filter,true)
+    
+    return sources if options[:ignore_scrape_interval]
+    
+    output = []
+    sources.each do |source|
+      if source.last_scraped_at
+        output << source if Time.now - source.last_scraped_at > source.scrape_interval                    
+      else
+        output << source
+      end
+    end
+      
+    return output    
+  end
+  
+end

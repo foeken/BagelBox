@@ -1,0 +1,63 @@
+<% content_for(:header) do %>
+  BagelBox
+<% end %>
+
+<h2>Hi there, ready to get started?</h2>
+
+<p style="border: 1px solid #ddd; padding: 5px; background: #FCFEEB;">
+Before we get started: to use BagelBox you need to install the 'wget' utility. It comes pre-installed on most linux
+distro's but it's not on osx by default. For osx download wget <%= link_to "here", "http://www.statusq.org/archives/2008/07/30/1954/", :target => "_blank" -%>.
+</p>
+
+<p>
+  I've tried to make scraping as easy as possible but there is still some stuff I need to explain.
+  The goal of this application is to help you get the content you want without actually manually
+  downloading it.
+  <br/><br/>
+  You can set up <%= link_to('several sources of content',sources_path) %>. A content source provides us with stuff to download.
+  Examples could be Pirate Bay, Demonoid or someone's ftp site.   
+  <br/><br/>
+  Content can be 'scraped' (gathered) from different
+  kinds of sources. At the moment RSS, FTP and Directory sources are supported.
+  I took the liberty to set up some default sources for you to get started.  
+</p>
+
+<h3>Filtering content</h3>
+
+<p>
+  You probably don't want to download everything from every source so we'll have to filter what you want and 
+  what you don't want. We are going to set up <%= link_to('filters',data_file_filters_path) %> for this purpose.
+  <br/><br/>
+  A filter looks at the offered content and determines if you might want it or not. I added a default filter for
+  you that states you do <b>not</b> want TS or CAM files. Who watches those anyway?
+  <br/><br/>
+  You can add very specific filters that say you want 'episode 1 of season 1 of the X-Files' or very 
+  generic filters like 'Every episode of desperate housewives'.
+  <br/><br/>
+  In the latter case you might not want the episodes you already have, so you can add negative filters too.
+  These filters are exactly the same except when they match the content is rejected.  
+</p>
+
+<h3>Building filters automatically</h3>
+
+<p>
+  We both know you are lazy and don't want to set these filters up manually. Who can blame you! 
+  Besides content sources we also have filter sources. These sources generate filters.
+  <br/><br/>
+  You can have positive filter sources like the RSS stream from myepisodes.com or negative sources like
+  your local movies directory (You don't want to download those again!).
+</p>
+
+<h3>Setting up timed scraping</h3>
+
+<p>
+  Run '<span class="variable">rake scraper:install</span>' to install timed scraping when you have finished configuring BagelBox. Run '<span class="variable">rake scraper:uninstall</span>' to revert. By default the scraper runs every 5 minutes, but you can define individual scrape intervals for each source.
+</p>
+
+<h3>Advanced customization</h3>
+
+<p>
+  Most of the setup can be customized. Check out file types to see how you can add more stuff to scrape!
+</p>
+
+</p>
