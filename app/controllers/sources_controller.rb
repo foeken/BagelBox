@@ -2,8 +2,8 @@ class SourcesController < ApplicationController
   # GET /sources
   # GET /sources.xml
   def index
-    @filter_sources  = Source.find_all_by_filter_source(true, :order => "priority")
-    @content_sources = Source.find_all_by_filter_source(false, :order => "priority")
+    @filter_sources  = Source.find_all_by_filter_source(true, :order => "active,priority")
+    @content_sources = Source.find_all_by_filter_source(false, :order => "active,priority")
 
     respond_to do |format|
       format.html # index.html.erb
