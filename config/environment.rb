@@ -44,4 +44,5 @@ Rails::Initializer.run do |config|
   # config.i18n.default_locale = :de
 end
 
-SCRAPER_LOG = Logger.new(RAILS_ROOT+'/log/scraper.txt', 'daily')
+SCRAPER_LOG = Logger.new(RAILS_ROOT+'/log/scraper.log', 'daily')
+SCRAPER_LOG.formatter = Logger::Formatter.new
