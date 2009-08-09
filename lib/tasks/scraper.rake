@@ -4,7 +4,7 @@ namespace :scraper do
 
   desc "Installs timed scraping (Default: Every 5 minutes, source scrape timer has preference)"
   task :install do    
-    File.open("crontab.tmp", 'w') {|f| f.write("05 * * * * cd #{`pwd`.strip} && RAILS_ENV=production rake scraper:run") }
+    File.open("crontab.tmp", 'w') {|f| f.write("MAILTO=\"\"\n05 * * * * cd #{`pwd`.strip} && RAILS_ENV=production rake scraper:run") }
     `crontab crontab.tmp`
     `rm crontab.tmp`
   end

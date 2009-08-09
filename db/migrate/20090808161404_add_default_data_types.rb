@@ -12,7 +12,7 @@ class AddDefaultDataTypes < ActiveRecord::Migration
     
     # Ignored file types
     subtitles = DataType.create( :name => "Subtitle file", :extension => "(srt|idx)$", :ignore => true )
-    info      = DataType.create( :name => "Info file", :extension => "(txt|nfo)$", :ignore => true )
+    info      = DataType.create( :name => "Info file", :extension => "(txt|nfo|db)$", :ignore => true )
     
     rss_title.meta_matchers = File.read(RAILS_ROOT+'/db/migrate/default_rss_title_matchers.txt')
     rss_title.save
