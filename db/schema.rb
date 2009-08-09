@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090809103137) do
+ActiveRecord::Schema.define(:version => 20090808230701) do
 
   create_table "data_file_filters", :force => true do |t|
     t.string   "name"
@@ -37,13 +37,6 @@ ActiveRecord::Schema.define(:version => 20090809103137) do
     t.string   "extension"
     t.boolean  "ignore",        :default => false
     t.text     "meta_matchers"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "log_messages", :force => true do |t|
-    t.string   "message"
-    t.string   "level",      :default => "INFO"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
