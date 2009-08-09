@@ -7,7 +7,7 @@ class CreateSources < ActiveRecord::Migration
       t.string :source_type
       t.string :category
       t.integer :priority, :default => 0
-      t.string :priority_labels, :default => 0      
+      t.string :priority_labels, :default => ""      
       t.text :options, :default => ""
       t.boolean :filter_source, :default => false
       t.boolean :negative, :default => false

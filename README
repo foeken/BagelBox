@@ -2,6 +2,11 @@
 
 Before we get started: to use BagelBox you need to install the 'wget' utility. It comes pre-installed on most linux distro's but it's not on osx by default. For osx download wget here: http://www.statusq.org/archives/2008/07/30/1954/
 
+Make sure you have sqlite installed. OSX comes pre-installed, on ubuntu 9.04:
+'sudo apt-get install sqlite3'
+'sudo apt-get install libsqlite3-ruby'
+'sudo gem install sqlite-ruby'
+
 Once you have wget start the BagelBox server using: 'script/server -e production'
 
 == Welcome to BagelBox
