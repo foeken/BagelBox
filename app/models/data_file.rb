@@ -46,7 +46,7 @@ class DataFile < ActiveRecord::Base
     df.name       = "[#{source.name}] #{mt[:filename]}"
     df.active     = true
     df.negative   = source.negative
-    df.singleton  = true
+    df.singleton  = !source.negative
     
     expression  = []    
     labels.each do |label|
