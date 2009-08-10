@@ -32,19 +32,32 @@ class Scraper
       # remove files from the accepted array, they can only be in ONE group.
       accepted_data_files -= data_file_group
       
+      selected_data_file = nil
       # Handle the selection of which file to download now...
       if data_file_group.length == 1
         SCRAPER_LOG.info( "Single match for '#{filter.to_s}' on #{data_file_group.first.source.name}" )
-        data_file_group.first.download
+        selected_data_file = data_file_group.first                        
       else        
         SCRAPER_LOG.info( "Multiple matches for '#{filter.to_s}' on #{data_file_group.collect{ |s| s.source.name }.to_sentence}" )
         
         sorted_data_file_group = DataFile.sort(data_file_group)
-        
-        SCRAPER_LOG.info( "Selected match with highest priority: #{sorted_data_file_group.first.source.name}" )                
-        
-        sorted_data_file_group.first.download
-      end      
+        selected_data_file = sorted_data_file_group.first
+        SCRAPER_LOG.info( "Selected match with highest priority: #{sorted_data_file_group.first.source.name}" )                        
+      end
+      
+      selected_data_file.download
+      
+      begin
+        dff = selected_data_file.to_date_file_filter
+        dff.source = selected_data_file.source
+        dff.negative = true
+        dff.singleton = false
+        dff.save!
+        SCRAPER_LOG.info( "Created new filter from '#{selected_data_file.source.name}': #{dff.to_s}" )
+      rescue
+        SCRAPER_LOG.info( "Skipped new filter from '#{selected_data_file.source.name}': #{dff.to_s}" )
+      end
+      
     end
     
     # We assume that each of the successful singular filters have been handled and can be deactivated.

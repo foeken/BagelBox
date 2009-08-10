@@ -11,8 +11,9 @@
 <table class="sources_table" cellspacing="0">
 <% @content_sources.each do |source| %>
   <tr class="<%= cycle('even','odd') %>">
-    <td width="20"><%= source.active ? image_tag("online.png") : image_tag("offline.png") %></td>
+    <td width="20"><%= source.negative && source.filter_source ? image_tag("offline.png") : image_tag("online.png") %></td>
     <td width="60%"><%= source.name %></td>
+    <td width="100"><i><%= source.active ? "Enabled" : "Disabled" %></i></td>    
     <td width="70"><%= source.source_type %></td>    
     <td><%= link_to 'Show', source %></td>
     <td><%= link_to 'Edit', edit_source_path(source) %></td>
@@ -31,8 +32,9 @@
 <table class="sources_table" cellspacing="0">
 <% @filter_sources.each do |source| %>
   <tr class="<%= cycle('even','odd') %>">
-    <td width="20"><%= source.active ? image_tag("online.png") : image_tag("offline.png") %></td>
+    <td width="20"><%= source.negative && source.filter_source ? image_tag("offline.png") : image_tag("online.png") %></td>
     <td width="60%"><%= source.name %></td>
+    <td width="100"><i><%= source.active ? "Enabled" : "Disabled" %></i></td>    
     <td width="70"><%= source.source_type %></td>    
     <td><%= link_to 'Show', source %></td>
     <td><%= link_to 'Edit', edit_source_path(source) %></td>
