@@ -1,7 +1,7 @@
 class AddDefaultDataTypes < ActiveRecord::Migration
   def self.up
     video     = DataType.new( :name => "Video file", :extension => "(avi|mpg|mkv)$", :ignore => false )
-    torrent   = DataType.new( :name => "Torrent file", :extension => "(torrent)$", :ignore => false )
+    torrent   = DataType.new( :name => "Torrent/Nzb file", :extension => "(torrent|nzb)$", :ignore => false )
     rss_title = DataType.new( :name => "RSS Title",  :extension => "", :ignore => false )
     
     video.meta_matchers = File.read(RAILS_ROOT+'/db/migrate/default_video_matchers.txt')
