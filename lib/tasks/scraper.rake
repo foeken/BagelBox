@@ -3,9 +3,10 @@ require 'rubygems'
 namespace :scraper do
 
   desc "Installs timed scraping (Default: Every 5 minutes, source scrape timer has preference)"
-  task :install do    
-    File.open("crontab.tmp", 'w') do |f| 
-      f.write("SHELL=/bin/sh\nPATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin\nMAILTO=\"\"\n*/5 * * * * cd #{`pwd`.strip} && RAILS_ENV=production rake scraper:run")
+  task :install => :environment do    
+    cron = Setting.get("DEFAULT_SCRAPER_CRON")
+    File.open("crontab.tmp", 'w') do |f|
+      f.write("SHELL=/bin/sh\nPATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin\nMAILTO=\"\"\n#{cron} cd #{`pwd`.strip} && RAILS_ENV=production rake scraper:run")
     end
     `crontab crontab.tmp`
     `rm crontab.tmp`

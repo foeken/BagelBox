@@ -94,6 +94,10 @@ pre {
 	border-bottom: 1px solid #ddd;
 }
 
+.settings_table { width: 100%; }
+.settings_table td { padding: 4px; }
+.settings_table th { text-align:left; }
+
 .sources_table { width: 100%; }
 .sources_table td { padding: 4px; }
 

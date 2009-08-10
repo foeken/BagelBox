@@ -1,0 +1,29 @@
+<% content_for(:header) do %>
+  New setting
+<% end %>
+
+<% form_for(@setting) do |f| %>
+  <%= f.error_messages %>
+
+  <table class="input_table">
+    <tr>
+      <td><%= f.label :description %></td>
+      <td><%= f.text_field :description %></td>
+    </tr>
+    <tr>
+      <td><%= f.label :value %></td>
+      <td><%= f.text_field :value %></td>
+    </tr>    
+    <tr>
+      <td><%= f.label :key %></td>
+      <td>
+        <%= f.text_field :key %><br/>
+        <small>The key is used by BagelBox to parse the setting.</small>
+      </td>
+    </tr>    
+  </table>
+  
+  <p style="text-align:right">
+    <%= f.submit 'Create' %> or <%= link_to 'cancel', settings_path %>
+  </p>
+<% end %>

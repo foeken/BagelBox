@@ -1,0 +1,29 @@
+<% content_for(:header) do %>
+  What goes where?
+<% end %>
+
+<table class="settings_table">
+  <tr>
+    <th>Description</th>
+    <th>Value</th>
+  </tr>
+
+<% @settings.each do |setting| %>
+  <tr class="<%= cycle('even','odd') %>">
+    <td><%=h setting.description %></td>
+    <td><%=h setting.value %></td>
+    <td><%= link_to 'Edit', edit_setting_path(setting) %></td>
+    
+    <% if RAILS_ENV == 'development' %>
+    <td width="50" style="text-align:right; padding-right: 10px;"><%= link_to 'Remove', setting, :confirm => 'Are you sure?', :method => :delete, :class => 'remove_link' %></td>
+    <% end %>
+  </tr>
+<% end %>
+</table>
+
+<% if RAILS_ENV == 'development' %>
+<br />
+<p style="text-align:right">
+<%= link_to 'New setting', new_setting_path %>
+</p>
+<% end %>

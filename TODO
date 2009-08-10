@@ -1,4 +1,2 @@
-- Build Settings
- - Global download location override
- - Set NUMBER_LABELS
- - Set global scraper interval used in 'rake:scraper:install'
+- Search content sources: some sites offer a rss stream for a search term. It would be nice to 
+  use that as a content source dynamically.

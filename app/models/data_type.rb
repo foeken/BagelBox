@@ -6,8 +6,6 @@ class DataType < ActiveRecord::Base
   LABEL_SPLITTER   = ","
   CATEGORIES       = ["movie","tv_show"]
   
-  NUMBER_LABELS    = [:season,:episode,:track]
-  
   has_many :data_files, :dependent => :destroy
     
   def self.for filename

@@ -1,0 +1,32 @@
+<% content_for(:header) do %>
+  <%= @setting.description %>
+<% end %>
+
+<% form_for(@setting) do |f| %>
+  <%= f.error_messages %>
+  
+  <table class="input_table">
+    <tr>
+      <td><%= f.label :description %></td>
+      <td><%= f.text_field :description %></td>
+    </tr>
+    <tr>
+      <td><%= f.label :value %></td>
+      <td><%= f.text_field :value %></td>
+    </tr>    
+    <tr>
+      <td><%= f.label :key %></td>
+      <td>
+        <%= link_to "Show key", "#", :onclick => 'this.hide();' + visual_effect(:toggle_appear, 'key_field') %>
+        <div id="key_field" style="display:none;">
+          <%= f.text_field :key, :disabled => (RAILS_ENV != 'development') %><br/>
+          <small>The key is used by BagelBox to parse the setting.</small>
+        </div>
+      </td>
+    </tr>    
+  </table>
+
+  <p style="text-align:right">
+    <%= f.submit 'Update' %> or <%= link_to 'cancel', settings_path %>
+  </p>
+<% end %>

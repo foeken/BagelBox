@@ -52,7 +52,7 @@ class DataFile < ActiveRecord::Base
     labels.each do |label|
       if mt[label]
         
-        if DataType::NUMBER_LABELS.include?(label)
+        if Setting.get("NUMBER_LABELS").split(',').include?(label.to_s)
           value = "^0?#{mt[label].to_i}$"
         else
           value = mt[label]

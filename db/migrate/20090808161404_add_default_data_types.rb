@@ -1,7 +1,7 @@
 class AddDefaultDataTypes < ActiveRecord::Migration
   def self.up
-    video     = DataType.new( :name => "Video file", :extension => "(avi|mpg|mkv)$", :ignore => false )
-    torrent   = DataType.new( :name => "Torrent/Nzb file", :extension => "(torrent|nzb)$", :ignore => false )
+    video     = DataType.new( :name => "Video", :extension => "(avi|mpg|mkv)$", :ignore => false )
+    torrent   = DataType.new( :name => "Torrent/Nzb", :extension => "(torrent|nzb)$", :ignore => false )
     rss_title = DataType.new( :name => "RSS Title",  :extension => "", :ignore => false )
     
     video.meta_matchers = File.read(RAILS_ROOT+'/db/migrate/default_video_matchers.txt')
@@ -11,8 +11,8 @@ class AddDefaultDataTypes < ActiveRecord::Migration
     torrent.save    
     
     # Ignored file types
-    subtitles = DataType.create( :name => "Subtitle file", :extension => "(srt|idx)$", :ignore => true )
-    info      = DataType.create( :name => "Info file", :extension => "(txt|nfo|db)$", :ignore => true )
+    subtitles = DataType.create( :name => "Subtitle", :extension => "(srt|idx)$", :ignore => true )
+    info      = DataType.create( :name => "Info", :extension => "(txt|nfo|db)$", :ignore => true )
     
     rss_title.meta_matchers = File.read(RAILS_ROOT+'/db/migrate/default_rss_title_matchers.txt')
     rss_title.save

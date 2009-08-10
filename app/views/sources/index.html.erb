@@ -13,7 +13,7 @@
   <tr class="<%= cycle('even','odd') %>">
     <td width="20"><%= source.negative && source.filter_source ? image_tag("offline.png") : image_tag("online.png") %></td>
     <td width="60%"><%= source.name %></td>
-    <td width="100"><i><%= source.active ? "Enabled" : "Disabled" %></i></td>    
+    <td width="100"><i><%= source.active ? "Enabled" : "<font color='crimson'>Disabled</font>" %></i></td>    
     <td width="70"><%= source.source_type %></td>    
     <td><%= link_to 'Show', source %></td>
     <td><%= link_to 'Edit', edit_source_path(source) %></td>
@@ -21,6 +21,8 @@
   </tr>
 <% end %>
 </table>
+
+<br />
 
 <p style="text-align: right">
   <%= link_to 'Add a new source', new_source_path %>
@@ -38,7 +40,7 @@
   <tr class="<%= cycle('even','odd') %>">
     <td width="20"><%= source.negative && source.filter_source ? image_tag("offline.png") : image_tag("online.png") %></td>
     <td width="60%"><%= source.name %></td>
-    <td width="100"><i><%= source.active ? "Enabled" : "Disabled" %></i></td>    
+    <td width="100"><i><%= source.active ? "Enabled" : "<font color='crimson'>Disabled</font>" %></i></td>    
     <td width="70"><%= source.source_type %></td>    
     <td><%= link_to 'Show', source %></td>
     <td><%= link_to 'Edit', edit_source_path(source) %></td>
