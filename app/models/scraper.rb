@@ -99,10 +99,12 @@ class Scraper
     
     return sources if options[:ignore_scrape_interval]
     
+    default_scrape_interval = Setting.get("DEFAULT_SCRAPE_INTERVAL").to_i
+    
     output = []
     sources.each do |source|
       if source.last_scraped_at
-        output << source if Time.now - source.last_scraped_at > source.scrape_interval                    
+        output << source if Time.now - source.last_scraped_at > ( source.scrape_interval || default_scrape_interval )
       else
         output << source
       end

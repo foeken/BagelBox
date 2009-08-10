@@ -57,7 +57,7 @@
       <td>
         <%= f.text_field :scrape_interval %>
         <small>
-          Default setting is 300 seconds. This value is the minimal interval required.
+          Default setting is <%= Setting.get("DEFAULT_SCRAPE_INTERVAL") %> seconds. This value is the minimal interval required. Leave blank to use default.
         </small>
       </td>
     </tr>
@@ -89,7 +89,7 @@
         <small>
           When we get to choose between multiple dowloads that both match, 
           which labels do we use to make the decision? Labels are defined inside
-          <%= link_to "File types", data_types_path -%>.
+          <%= link_to "File types", data_types_path -%>. Leave blank to use category default.
         </small>
       </td>
     </tr>

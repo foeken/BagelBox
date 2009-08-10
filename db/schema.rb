@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090810145643) do
+ActiveRecord::Schema.define(:version => 20090810152715) do
 
   create_table "data_file_filters", :force => true do |t|
     t.string   "name"
@@ -62,10 +62,10 @@ ActiveRecord::Schema.define(:version => 20090810145643) do
     t.boolean  "negative",          :default => false
     t.string   "filter_labels"
     t.datetime "last_scraped_at"
-    t.integer  "scrape_interval",   :default => 300
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "download_location", :default => ""
+    t.integer  "scrape_interval"
   end
 
 end

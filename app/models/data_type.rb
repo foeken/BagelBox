@@ -16,11 +16,11 @@ class DataType < ActiveRecord::Base
   end
   
   def get_definition variable
-    meta_matchers.scan(/define #{variable}, "(.*)"/).flatten.first
+    meta_matchers_with_includes([self],:skip_definitions => true).scan(/define #{variable}, "(.*)"/).flatten.first
   end
   
   def meta_matchers_with_defines
-    output         = meta_matchers
+    output         = meta_matchers.clone
     define_matches = output.scan(/define (.*?), "(.*)"/)
     define_matches.each do |variable,value|
       output.gsub!(/define #{variable}, "#{Regexp.escape(value)}"(\r\n)?/, "")
@@ -29,8 +29,8 @@ class DataType < ActiveRecord::Base
     return output
   end
   
-  def meta_matchers_with_includes already_included=[self]
-    output          = meta_matchers_with_defines
+  def meta_matchers_with_includes already_included=[self], options={}
+    output          = options[:skip_definitions] ? meta_matchers.clone : meta_matchers_with_defines
     include_matches = output.scan(/include "(.*)"/)    
     if !include_matches.empty?
       include_matches.each do |data_type_name|
@@ -38,7 +38,7 @@ class DataType < ActiveRecord::Base
         if dt
           # Make sure we prevent circular references
           if !already_included.include?(dt)
-            dt_matchers = dt.meta_matchers_with_includes(already_included)
+            dt_matchers = dt.meta_matchers_with_includes(already_included,options)
             dt_matchers = "# BEGIN INCLUDE: \"#{data_type_name}\"\r\n" + dt_matchers
             dt_matchers = dt_matchers + "\r\n# END INCLUDE: \"#{data_type_name}\""
             output.gsub!(/include "#{data_type_name}"/,dt_matchers)

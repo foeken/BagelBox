@@ -6,6 +6,6 @@ class AddDefaultSettings < ActiveRecord::Migration
   end
 
   def self.down
-    Setting.delete_all
+    Setting.find_all_by_key(["DEFAULT_DOWNLOAD_PATH","DEFAULT_SCRAPER_CRON","NUMBER_LABELS"]).map(&:destroy)
   end
 end

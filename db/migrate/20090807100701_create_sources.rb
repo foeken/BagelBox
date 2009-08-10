@@ -13,7 +13,7 @@ class CreateSources < ActiveRecord::Migration
       t.boolean :negative, :default => false
       t.string :filter_labels
       t.datetime :last_scraped_at
-      t.integer :scrape_interval, :default => 300
+      t.integer :scrape_interval
       t.string :download_location, :default => ""
       t.timestamps
     end

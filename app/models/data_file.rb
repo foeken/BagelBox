@@ -92,10 +92,24 @@ class DataFile < ActiveRecord::Base
   
   def priority_label_score
     output = []
-    if data_type && !source.priority_labels.blank?
-      mt = meta_data
-      source.priority_labels.split(',').each do |label|
-       definition = data_type.get_definition(label.upcase)
+    
+    if source.priority_labels.blank?
+      case source.category
+        when "movie"
+          selected_priority_labels = "quality,edition"
+        when "tv_show"
+          selected_priority_labels = "quality"
+        else
+          selected_priority_labels = ""
+      end        
+    else
+      selected_priority_labels = source.priority_labels
+    end
+        
+    if data_type && !selected_priority_labels.blank?
+      mt = meta_data            
+      selected_priority_labels.split(',').each do |label|
+       definition = data_type.get_definition(label.upcase.strip)
        if definition
          output << definition.split('|').index( mt[label.to_sym] ) || -1
        end
