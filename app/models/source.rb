@@ -26,7 +26,7 @@ class Source < ActiveRecord::Base
   end
   
   def download location
-    to = download_location.blank? ? Setting.get("DEFAULT_DOWNLOAD_LCOATION") : download_location
+    to = download_location.blank? ? Setting.get("DEFAULT_DOWNLOAD_PATH") : download_location
     SCRAPER_LOG.info( "Downloading #{location} to '#{to}'" )
     source_type_object.download(location,to)
   end
