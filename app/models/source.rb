@@ -1,5 +1,8 @@
 class Source < ActiveRecord::Base
-      
+  
+  has_many :data_files, :dependent => :destroy
+  has_many :data_file_filters, :dependent => :destroy
+  
   def parsed_options
     output = {}
     options.scan(/(.*?):\"(.*?)\"/i).each do |label,value|      

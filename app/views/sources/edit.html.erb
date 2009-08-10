@@ -29,10 +29,7 @@
     <tr>
       <td><%= f.label :category %></td>
       <td>
-        <%= f.select :category, DataType::CATEGORIES, :include_blank => true %>
-        <small>
-          Leave blank to auto-guess.
-        </small>
+        <%= f.select :category, [['Auto guess','']] + DataType::CATEGORIES.map{|c| [c,c]} %>
       </td>
     </tr>
     
@@ -60,7 +57,7 @@
       <td>
         <%= f.text_field :scrape_interval %>
         <small>
-          Default setting is 300 seconds.
+          Default setting is 300 seconds. This value is the minimal interval required.
         </small>
       </td>
     </tr>

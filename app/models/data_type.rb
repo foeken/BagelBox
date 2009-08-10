@@ -7,6 +7,8 @@ class DataType < ActiveRecord::Base
   CATEGORIES       = ["movie","tv_show"]
   
   NUMBER_LABELS    = [:season,:episode,:track]
+  
+  has_many :data_files, :dependent => :destroy
     
   def self.for filename
     DataType.all(:order => "extension DESC").each do |data_type|
