@@ -2,6 +2,30 @@ class AddDefaultSources < ActiveRecord::Migration
   def self.up
     
     # Content sources
+
+    Source.create(  :name => 'Nzbindex - alt.binaries.multimedia',
+                    :location => "Http://www.nzbindex.nl/rss/alt.binaries.multimedia/?sort=agedesc&minsize=300&max=50&more=1",
+                    :category => "",
+                    :source_type => "Rss",
+                    :priority_labels => "quality,edition",
+                    :priority => 700,
+                    :options => "rss_replace_in_parse_field:\"^(.*?)-\d*-, \"" )
+    
+    Source.create(  :name => 'Nzbindex - alt.binaries.tv',
+                    :location => "Http://www.nzbindex.nl/rss/alt.binaries.tv/?sort=agedesc&minsize=300&max=50&more=1",
+                    :category => "tv_show",
+                    :source_type => "Rss",
+                    :priority_labels => "quality",
+                    :priority => 700,
+                    :options => "rss_replace_in_parse_field:\"^(.*?)-\d*-, \"" )
+    
+    Source.create(  :name => 'Nzbindex - alt.binaries.movies',
+                    :location => "Http://www.nzbindex.nl/rss/alt.binaries.movies/?sort=agedesc&minsize=300&max=50&more=1",
+                    :category => "movie",
+                    :source_type => "Rss",
+                    :priority_labels => "quality,edition",
+                    :priority => 700,
+                    :options => "rss_replace_in_parse_field:\"^(.*?)-\d*-, \"" )
     
     Source.create(  :name => 'Pirate Bay (TV Shows)',
                     :location => "http://rss.thepiratebay.org/205",
@@ -77,7 +101,7 @@ class AddDefaultSources < ActiveRecord::Migration
                     :priority => 100,
                     :priority_labels => "quality,edition",
                     :options => "rss_parse_field:\"title\"" )
-        
+                            
     # Filter sources
     
     Source.create(  :name => 'Local movies',
