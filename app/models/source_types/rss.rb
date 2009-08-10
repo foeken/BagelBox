@@ -5,7 +5,7 @@ class SourceTypes::Rss < SourceTypes::SourceType
   end
   
   def self.download location, to
-    `cd #{to} && wget -b #{location} --content-disposition --tries=5 --retry-connrefused --random-wait`
+    `cd #{to} && wget -b #{location} --content-disposition --tries=5 --retry-connrefused --random-wait -o /dev/null`
   end
   
   def self.data location,source=nil

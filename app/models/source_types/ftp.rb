@@ -5,7 +5,7 @@ class SourceTypes::Ftp < SourceTypes::SourceType
   end
   
   def self.download location, to
-    `cd #{to} && wget -b #{location}`
+    `cd #{to} && wget -b #{location} -o /dev/null`
   end
   
   def self.data location,source=nil
