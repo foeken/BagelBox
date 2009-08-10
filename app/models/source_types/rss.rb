@@ -46,6 +46,12 @@ class SourceTypes::Rss < SourceTypes::SourceType
       else
         rss_replace_in_link = nil
       end
+      
+      if source && source.parsed_options[:rss_replace_in_parse_field]
+        rss_replace_in_parse_field = source.parsed_options[:rss_replace_in_parse_field].split(',')
+      else
+        rss_replace_in_parse_field = nil
+      end
           
       output = []
       open(location) do |http|
@@ -53,9 +59,10 @@ class SourceTypes::Rss < SourceTypes::SourceType
         result   = RSS::Parser.parse(response, false)
         result.items.each_with_index do |item, i|
           parse_field = item.send(rss_parse_field)
-          torrent_url = item.send(rss_link_field)
+          parse_field.gsub!(/#{rss_replace_in_parse_field.first}/,rss_replace_in_parse_field.last) if rss_replace_in_parse_field          
           
-          torrent_url.gsub!(rss_replace_in_link.first,rss_replace_in_link.last) if rss_replace_in_link          
+          torrent_url = item.send(rss_link_field)
+          torrent_url.gsub!(/#{rss_replace_in_link.first}/,rss_replace_in_link.last) if rss_replace_in_link          
           output << [parse_field,torrent_url]
         end  
       end
