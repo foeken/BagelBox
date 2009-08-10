@@ -34,18 +34,21 @@ class DataType < ActiveRecord::Base
     include_matches = output.scan(/include "(.*)"/)    
     if !include_matches.empty?
       include_matches.each do |data_type_name|
-        dt          = DataType.find_by_name(data_type_name)
-        
-        # Make sure we prevent circular references
-        if !already_included.include?(dt)
-          dt_matchers = dt.meta_matchers_with_includes(already_included)
-          dt_matchers = "# BEGIN INCLUDE: \"#{data_type_name}\"\r\n" + dt_matchers
-          dt_matchers = dt_matchers + "\r\n# END INCLUDE: \"#{data_type_name}\""
-          output.gsub!(/include "#{data_type_name}"/,dt_matchers)
-          already_included << dt
+        dt = DataType.find_by_name(data_type_name)        
+        if dt
+          # Make sure we prevent circular references
+          if !already_included.include?(dt)
+            dt_matchers = dt.meta_matchers_with_includes(already_included)
+            dt_matchers = "# BEGIN INCLUDE: \"#{data_type_name}\"\r\n" + dt_matchers
+            dt_matchers = dt_matchers + "\r\n# END INCLUDE: \"#{data_type_name}\""
+            output.gsub!(/include "#{data_type_name}"/,dt_matchers)
+            already_included << dt
+          else
+            output.gsub!(/include "#{data_type_name}"/,"# Skipped include \"#{data_type_name}\"")
+          end
         else
-          output.gsub!(/include "#{data_type_name}"/,"# Skipped include \"#{data_type_name}\"")
-        end        
+          SCRAPER_LOG.error( "Could not include file type: #{data_type_name} in #{self.name}" )
+        end
       end
     end
     return output
