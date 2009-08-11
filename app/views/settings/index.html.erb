@@ -6,7 +6,7 @@
 
 <h2>Advanced setup</h2>
 
-<table class="settings_table">
+<table class="settings_table" cellspacing="0">
   <tr>
     <th>Description</th>
     <th>Value</th>
@@ -16,10 +16,10 @@
   <tr class="<%= cycle('even','odd') %>">
     <td><%=h setting.description %></td>
     <td><%=h setting.value %></td>
-    <td><%= link_to 'Edit', edit_setting_path(setting) %></td>
+    <td width="80" style="text-align:right;"><%= link_to 'Edit', edit_setting_path(setting) %></td>
     
     <% if RAILS_ENV == 'development' %>
-    <td width="50" style="text-align:right; padding-right: 10px;"><%= link_to 'Remove', setting, :confirm => 'Are you sure?', :method => :delete, :class => 'remove_link' %></td>
+    <td width="80" style="text-align:right; padding-right: 10px;"><%= link_to 'Remove', setting, :confirm => 'Are you sure?', :method => :delete, :class => 'remove_link' %></td>
     <% end %>
   </tr>
 <% end %>

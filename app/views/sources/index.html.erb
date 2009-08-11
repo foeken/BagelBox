@@ -12,12 +12,12 @@
 <% @content_sources.each do |source| %>
   <tr class="<%= cycle('even','odd') %>">
     <td width="20"><%= source.negative && source.filter_source ? image_tag("offline.png") : image_tag("online.png") %></td>
-    <td width="60%"><%= source.name %></td>
+    <td><%= source.name %></td>
     <td width="100"><i><%= source.active ? "Enabled" : "<font color='crimson'>Disabled</font>" %></i></td>    
     <td width="70"><%= source.source_type %></td>    
-    <td><%= link_to 'Show', source %></td>
-    <td><%= link_to 'Edit', edit_source_path(source) %></td>
-    <td width="50" style="text-align:right; padding-right: 10px;"><%= link_to 'Remove', source, :confirm => 'Are you sure?', :method => :delete, :class => "remove_link" %></td>
+    <td width="80" style="text-align:right;"><%= link_to 'Show', source %></td>
+    <td width="80" style="text-align:right;"><%= link_to 'Edit', edit_source_path(source) %></td>
+    <td width="80" style="text-align:right; padding-right: 10px;"><%= link_to 'Remove', source, :confirm => 'Are you sure?', :method => :delete, :class => "remove_link" %></td>
   </tr>
 <% end %>
 </table>
@@ -39,12 +39,12 @@
 <% @filter_sources.each do |source| %>
   <tr class="<%= cycle('even','odd') %>">
     <td width="20"><%= source.negative && source.filter_source ? image_tag("offline.png") : image_tag("online.png") %></td>
-    <td width="60%"><%= source.name %></td>
+    <td><%= source.name %></td>
     <td width="100"><i><%= source.active ? "Enabled" : "<font color='crimson'>Disabled</font>" %></i></td>    
     <td width="70"><%= source.source_type %></td>    
-    <td><%= link_to 'Show', source %></td>
-    <td><%= link_to 'Edit', edit_source_path(source) %></td>
-    <td width="50" style="text-align:right; padding-right: 10px;"><%= link_to 'Remove', source, :confirm => 'Are you sure?', :method => :delete, :class => 'remove_link' %></td>
+    <td width="80" style="text-align:right;"><%= link_to 'Show', source %></td>
+    <td width="80" style="text-align:right;"><%= link_to 'Edit', edit_source_path(source) %></td>
+    <td width="80" style="text-align:right; padding-right: 10px;"><%= link_to 'Remove', source, :confirm => 'Are you sure?', :method => :delete, :class => 'remove_link' %></td>
   </tr>
 <% end %>
 </table>

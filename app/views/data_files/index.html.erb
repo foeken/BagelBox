@@ -1,0 +1,37 @@
+<% content_for(:header) do %>
+  What did we already download?
+<% end %>
+
+
+<% if @data_files.empty? %>
+
+<h2>Oops, you haven't downloaded anything yet!</h2>
+
+<p>
+  Head over to <%= link_to "filters", data_file_filters_path -%> and provide BagelBox with stuff you want and wait for it to come on in!
+</p>
+
+<% else %>
+
+<table class="data_files_table" cellspacing="0">
+  <tr>
+    <th>&nbsp;</th>
+    <th>Name</th>
+    <th>Source</th>
+    <th>Category</th>
+    <th>File type</th>
+    <th>Downloaded</th>
+  </tr>
+
+<% @data_files.each do |data_file| %>
+  <tr class="<%= cycle('even','odd') %>">
+    <td><%=h data_file.filename %></td>
+    <td><%=h data_file.source.name %></td>
+    <td><%=h data_file.category %></td>
+    <td><%=h data_file.data_type %></td>
+    <td><%=h data_file.updated_at.to_s(:long) %></td>
+  </tr>
+<% end %>
+</table>
+
+<% end %>
