@@ -20,15 +20,24 @@ class DataFile < ActiveRecord::Base
   
   # Return meta data for this file. Meta data is a hash containing labels specified in the data type
   # meta matchers. It is guaranteed to include the :filename and :category label.
-  def meta_data
+  def meta_data options={}
     if data_type
-      data_type.meta_data( self )
+      output = data_type.meta_data( self )
     else
-      { :filename => filename, 
+      output = { :filename => filename, 
         :category => category.to_s,
         :location => location,
         :source_name => source.name }
     end
+    
+    if options[:skip]
+      options[:skip].each do |label|
+        output.delete(label)
+      end
+    end
+    
+    return output
+    
   end
   
   # Returns the associated data file filter  
@@ -89,7 +98,14 @@ class DataFile < ActiveRecord::Base
     return [status,matching_filters]
   end
       
-  def download    
+  def queue_to_download
+    self.save!
+  end
+  
+  def download
+    self.downloaded    = true
+    self.downloaded_at = DateTime.now
+    self.save!
     source.download(location)
   end
   

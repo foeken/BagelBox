@@ -26,7 +26,8 @@
     </tr>
   
     <% @source.data(:manual_scrape => true).each_with_index do |data_file,i| %>
-    
+      
+      <% data_file.write_attribute(:changed_attributes,{}) %>
       <% mt     = data_file.meta_data   %>
       <% status = @source.filter_source ? [nil,nil] : data_file.run_filters %>
     
@@ -57,9 +58,9 @@
         <% end %>
       
         <td><%= link_to "Download", { :controller => :sources, 
-                                      :action => :download, 
-                                      :id => @source.id, 
-                                      :location => data_file.location }, :post => true %></td>
+                                   :action => :download, 
+                                   :id => @source.id, 
+                                   :data_file => data_file.to_yaml }, :method => :post %></td>
       
       </tr>
       <% if mt[:matcher] %>

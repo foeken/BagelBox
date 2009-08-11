@@ -1,5 +1,5 @@
 <% content_for(:header) do %>
-  What did we already download?
+  What did we our filters catch?
 <% end %>
 
 
@@ -16,20 +16,23 @@
 <table class="data_files_table" cellspacing="0">
   <tr>
     <th>&nbsp;</th>
-    <th>Name</th>
-    <th>Source</th>
-    <th>Category</th>
-    <th>File type</th>
-    <th>Downloaded</th>
+    <th style="text-align: left;">Name</th>
+    <th style="text-align: left;">Source</th>
+    <th style="text-align: left;">Category</th>
+    <th style="text-align: left;">File type</th>
+    <th style="text-align: left;">Status</th>
+    <th>&nbsp;</th>
   </tr>
 
 <% @data_files.each do |data_file| %>
   <tr class="<%= cycle('even','odd') %>">
-    <td><%=h data_file.filename %></td>
-    <td><%=h data_file.source.name %></td>
+    <td width="20" style="text-align:center"><%= data_file.downloaded ? image_tag("online.png") : image_tag("offline.png") %></td>
+    <td><%= link_to data_file.filename, data_file.location, :title => data_file.meta_data(:skip => [:matcher,:filename,:category,:source_name,:location]).to_yaml %></td>
+    <td><%= link_to data_file.source.name, edit_source_path(data_file.source) %></td>
     <td><%=h data_file.category %></td>
-    <td><%=h data_file.data_type %></td>
-    <td><%=h data_file.updated_at.to_s(:long) %></td>
+    <td><%= data_file.data_type ? link_to(data_file.data_type.name, edit_data_type_path(data_file.data_type)) : "NONE" %></td>
+    <td><%=h data_file.downloaded_at ? "Download started #{time_ago_in_words(data_file.downloaded_at)} ago" : "Queued for download" %></td>
+    <td><%= data_file.downloaded ? "&nbsp;" : link_to("Download now", download_path(data_file) ) %></td>
   </tr>
 <% end %>
 </table>

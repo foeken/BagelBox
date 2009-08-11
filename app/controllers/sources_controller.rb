@@ -40,10 +40,16 @@ class SourcesController < ApplicationController
   end
   
   def download
-    @source = Source.find(params[:id])
-    flash[:notice] = 'Downloading content...'
-    @source.download(params[:location])
-    redirect_to(source_path(@source))
+    @source = Source.find(params[:id])    
+    
+    data_file_attributes = YAML.load(params[:data_file]).ivars["attributes"]
+    data_file_attributes.delete("changed_attributes")
+    data_file = DataFile.new(data_file_attributes)
+    data_file.queue_to_download
+    data_file.download
+    flash[:notice] = 'Content was placed in download queue and is downloading...'
+    
+    redirect_to(data_files_path)
   end
 
   # POST /sources

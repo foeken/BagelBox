@@ -137,6 +137,9 @@ pre {
 .settings_table td { padding: 4px; }
 .settings_table th { text-align:left; }
 
+.data_files_table { width: 100%; }
+.data_files_table td { padding: 4px; }
+
 .sources_table { width: 100%; }
 .sources_table td { padding: 4px; }
 

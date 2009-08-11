@@ -22,12 +22,12 @@ class Source < ActiveRecord::Base
   def data options={}
     SCRAPER_LOG.info( "Gathering data from: '#{name}'" )
     self.update_attribute(:last_scraped_at, Time.now) unless options[:manual_scrape]
-    source_type_object.data(location,self)    
+    source_type_object.data(location,self)
   end
   
   def download location
     to = download_location.blank? ? Setting.get("DEFAULT_DOWNLOAD_PATH") : download_location
-    SCRAPER_LOG.info( "Downloading #{location} to '#{to}'" )
+    SCRAPER_LOG.info( "Downloading #{location} to '#{to}'" )    
     source_type_object.download(location,to)
   end
   
