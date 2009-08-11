@@ -2,6 +2,8 @@
   <%= @data_type.name %>
 <% end %>
 
+<%= render :partial => "settings/sub_menu" -%>
+
 <% form_for(@data_type) do |f| %>
   <%= f.error_messages %>
 
@@ -22,7 +24,9 @@
   <%= f.text_area :meta_matchers, :style => "width: 100%; font-family: courier" %>
   
   </div>
-  <p style="text-align: right">
-    <%= f.submit 'Update' %> or <%= link_to 'cancel', data_types_path %>
+
+  <p style="text-align:right;">
+    <div class="right"><div class="button"><%= f.submit 'Update' %></div>&nbsp; or <%= link_to 'cancel', data_types_path %></div>
   </p>
+
 <% end %>

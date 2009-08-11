@@ -12,14 +12,12 @@
 <body>
 
 <h1 id="header"><%= yield :header %></h1>
-
 <ul id="main_menu">
-  <li><%= link_to "Welcome", "/" %> | </li>
-  <li><%= link_to "Sources", sources_path %> | </li>
-  <li><%= link_to "Filters", data_file_filters_path %> | </li>
-  <li><%= link_to "File types", data_types_path %> | </li>
-  <li><%= link_to "Log", "/log" %> | </li>
-  <li><%= link_to "Settings", settings_path %></li>
+  <li class="<%= controller_name == "welcome" ? "selected" : "" %>"><%= link_to "Welcome", "/" %></li>
+  <li class="<%= controller_name == "sources" ? "selected" : "" %>"><%= link_to "Sources", sources_path %></li>
+  <li class="<%= controller_name == "data_file_filters" ? "selected" : "" %>"><%= link_to "Filters", data_file_filters_path %></li>
+  <li class="<%= controller_name == "data_files" ? "selected" : "" %>"><%= link_to "Downloads", data_files_path %></li>
+  <li class="<%= ["settings","log","data_types"].include?(controller_name) ? "selected" : "" %>"><%= link_to "Settings", settings_path %></li>
 </ul>
 
 <p style="color: green"><%= flash[:notice] %></p>

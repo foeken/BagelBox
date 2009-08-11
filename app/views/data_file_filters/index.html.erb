@@ -28,7 +28,7 @@
 <br/>
 
 <p style="text-align: right;">
-<%= link_to 'New filter', new_data_file_filter_path %>
+<div class="button right"><%= link_to 'Add a new filter', new_data_file_filter_path %></div>
 </p>
 
 <% if @data_file_filters.reject{ |x| x.source_id.nil? }.length > 0 %>

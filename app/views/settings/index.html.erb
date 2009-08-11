@@ -2,6 +2,10 @@
   What goes where?
 <% end %>
 
+<%= render :partial => "sub_menu" -%>
+
+<h2>Advanced setup</h2>
+
 <table class="settings_table">
   <tr>
     <th>Description</th>
@@ -24,6 +28,6 @@
 <% if RAILS_ENV == 'development' %>
 <br />
 <p style="text-align:right">
-<%= link_to 'New setting', new_setting_path %>
+  <div class="button right"><%= link_to 'Add a new setting', new_setting_path %></div><br/>
 </p>
 <% end %>

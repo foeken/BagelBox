@@ -2,6 +2,8 @@
   What stuff can we expect?
 <% end %>
 
+<%= render :partial => "settings/sub_menu" -%>
+
 <h2>What are file types?</h2>
 <p>
   File types are the core of filtering sources. Each file type has a set of meta information matchers.
@@ -39,4 +41,6 @@
 
 <br />
 
-<p style="text-align: right;"><%= link_to 'New file type', new_data_type_path %></p>
+<p style="text-align: right;">
+  <div class="button right"><%= link_to 'Add a new file type', new_data_type_path %></div><br/>
+</p>

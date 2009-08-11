@@ -24,7 +24,10 @@ class DataFile < ActiveRecord::Base
     if data_type
       data_type.meta_data( self )
     else
-      { :filename => filename, :category => category.to_s }
+      { :filename => filename, 
+        :category => category.to_s,
+        :location => location,
+        :source_name => source.name }
     end
   end
   

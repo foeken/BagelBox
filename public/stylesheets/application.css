@@ -15,10 +15,6 @@ a {
 	color: #39c;
 	cursor: pointer;
 }
-
-.remove_link {
-	color: crimson;
-}
  
 a:focus,
 a:hover {
@@ -38,15 +34,58 @@ a:active {
 	text-shadow: black 1px 1px 1px;
 }
 
-#main_menu {
+#sub_menu {
 	list-style: none;
 	padding: 0px;
-	margin: -35px 0px 0px 0px;
+	margin: -38px 0px 0px 0px;
 	color: #ccc;
 	float: right;
 }
 
+#sub_menu li {
+	display: inline;
+}
+
+#main_menu {
+	list-style: none;
+	padding: 0px;
+	margin: -76px 0px 0px 0px;
+	color: #ccc;
+	float: right;
+}
+
+#main_menu li a {
+	text-decoration: none;
+	color: white;
+}
+
+#main_menu .selected a {
+	color: black;
+}
+
+#main_menu .selected {
+	background: #E2E2E2;
+	padding-bottom: 11px;
+	opacity: 1.0;
+}
+
+#main_menu .selected:hover {
+	opacity: 1.0;
+}
+
+#main_menu li:hover {
+	opacity: 0.8;
+}
+
 #main_menu li {
+	-moz-border-radius-topleft: 5px;
+	-webkit-border-top-left-radius: 5px;
+	-moz-border-radius-topright: 5px;
+	-webkit-border-top-right-radius: 5px;
+	padding: 10px;
+	margin-left: 5px;
+	background : #5F5F5F;
+	opacity: 0.5;
 	display: inline;
 }
 
@@ -129,6 +168,52 @@ pre {
 .rejected { background-color: #D71930; }
 .no_match { }
 
+.right {
+	float: right;
+	clear: both;
+}
+
+.remove_link {
+	color: crimson;
+}
+
+.remove_link:hover {
+	text-decoration: none;
+}
+
+.button {
+	display:-moz-inline-box;
+	display:inline-block;
+	text-align: center;
+	padding: 5px 15px 5px 15px;
+	background: #eee;
+	border: 1px solid #fff;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+	background:	-webkit-gradient(linear, left bottom, left top, from(#ddd), color-stop(1, #fff));
+	-webkit-box-shadow: 0px 0px 3px #aaa;
+	-moz-box-shadow: 0px 0px 3px #aaa;
+	cursor:pointer;
+}
+
+.button input {
+	background: none;
+	border: none;
+	font-size: 12pt;
+	color: #494949;
+	cursor:pointer;
+}
+
+.button:hover {
+	-webkit-box-shadow: 0px 0px 5px #6A8BC4;	
+	-moz-box-shadow: 0px 0px 5px #6A8BC4;	
+}
+
+.button a {
+	color: #494949;
+	text-decoration: none;
+}
+
 fieldset {
 	border: 1px solid #ddd;
 }
@@ -142,8 +227,12 @@ input[type='text'],textarea {
 
 textarea {
 	font-family: "Courier New";
+	background: url('/images/input_back.jpg');
+	background-position: top;
+	background-repeat: repeat-x;
 }
 
 input[type='text'] {
+	background: url('/images/input_back.jpg');
 	font-size: 16pt;
 }

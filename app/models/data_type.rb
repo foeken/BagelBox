@@ -55,7 +55,9 @@ class DataType < ActiveRecord::Base
   end
   
   def meta_data data_file
-    labelled_matches = { :filename => data_file.filename }    
+    labelled_matches = { :filename => data_file.filename, 
+                         :location => data_file.location, 
+                         :source_name => data_file.source.name }    
     
     if data_file.directory && data_file.directory != "."
       filename = "#{data_file.directory}/#{data_file.filename}"
