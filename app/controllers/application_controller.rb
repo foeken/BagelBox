@@ -6,18 +6,18 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   layout "default"
   
-  before_filter :adjust_format_for_iphone
+  before_filter :determine_format, :adjust_format_for_iphone
   
   private
   
-  # Set iPhone format if request comes from iPhone
-  def adjust_format_for_iphone
-    request.format = :iphone if iphone_request?
+  def determine_format
+    if params[:format]
+      session[:format] = params[:format]
+    end
   end
   
-  # Return true for requests to iphone.trawlr.com
-  def iphone_request?
-    return params[:format] == "iphone"
+  def adjust_format_for_iphone
+    request.format = :iphone if session[:format] == "iphone"
   end
   
 end

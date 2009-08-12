@@ -2,6 +2,12 @@
   BagelBox
 <% end %>
 
+<% if iphone_user_agent? %>
+  <p style="border: 1px solid #ddd; padding: 20px; background: #FCFEEB; font-size: 18pt; font-weight: bold; line-height: 22pt;">
+    You seem to be on an iPhone. Would you like to try the <%= link_to "iPhone interface", "/?format=iphone" -%> instead?
+  </p>
+<% end %>
+
 <h2>Hi there, ready to get started?</h2>
 
 <% if !Setting.wget_installed? %>

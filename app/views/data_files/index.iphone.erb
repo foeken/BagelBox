@@ -1,0 +1,28 @@
+<% if @data_files.empty? %>
+
+<div style="padding: 0px 20px 0px 20px;">
+  <h2>Oops, no downloads!</h2>
+  <p>
+    Head over to <%= link_to "filters", data_file_filters_path -%> and provide BagelBox with stuff you want and wait for it to come on in!
+  </p>
+</div>
+
+<% else %>
+
+<table class="data_files_table" cellspacing="0" cellpadding="0">
+<% @data_files.each do |data_file| %>
+  <% current_class = cycle('even','odd') %>
+  <tr class="<%= current_class %>">
+    <td nowrap="nowrap">
+      <%= link_to data_file.filename[0..47], "#", :class => "edit_link" %>
+    </td>
+  </tr>
+  <tr class="<%= current_class %>">
+    <td style="padding-bottom: 10px; text-align: center;">      
+      <%= data_file.downloaded_at ? "<small>Downloaded #{time_ago_in_words(data_file.downloaded_at)} ago</small>" : link_to("Download now", download_data_file_path(data_file) ) %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<% end %>

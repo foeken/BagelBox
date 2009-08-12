@@ -6,6 +6,7 @@ class DataFileFiltersController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
+      format.iphone # index.iphone.erb
       format.xml  { render :xml => @data_file_filters }
     end
   end
