@@ -37,21 +37,24 @@ a:active {
 #sub_menu {
 	list-style: none;
 	padding: 0px;
-	margin: -38px 0px 0px 0px;
+	position: absolute;
+	right: 30px;
+	top: 89px;
 	color: #ccc;
-	float: right;
 }
 
 #sub_menu li {
-	display: inline;
+	display: inline-block;
 }
 
 #main_menu {
 	list-style: none;
+	position: absolute;
+	right: 30px;
+	top: 50px;
 	padding: 0px;
-	margin: -76px 0px 0px 0px;
+	margin: 0px;
 	color: #ccc;
-	float: right;
 }
 
 #main_menu li a {
@@ -65,7 +68,7 @@ a:active {
 
 #main_menu .selected {
 	background: #E2E2E2;
-	padding-bottom: 11px;
+	padding-bottom: 12px;
 	opacity: 1.0;
 }
 
@@ -86,7 +89,7 @@ a:active {
 	margin-left: 5px;
 	background : #5F5F5F;
 	opacity: 0.5;
-	display: inline;
+	display: inline-block;
 }
 
 .comment {

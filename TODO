@@ -2,6 +2,20 @@
 
 BagelBox is far from finished, it needs real world testing and more polish...
 
+- Add wget installed check for OSX and show notice only if not installed
+
+- Detect if file type meta matchars have been changed in new version and offer to merge
+
+- Auto update, if possible from within app
+
+- Freeze gems/rails inside to make it standalone (if possible), preferable with GitStack(?)
+
+- Enable/Disable scraper from within app
+
+- Make sure current UI is cross-browser
+
+- iPhone specific interface for adding/enabling filters and watching downloads
+
 - Instead of downloading the data_file directly store it in the database, so we can do queued downloading (optional per source: ftp!)
 
 - Verify download before deactivating filters (combine with queue?)
