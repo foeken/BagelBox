@@ -44,7 +44,7 @@ class DataTypesController < ApplicationController
 
     respond_to do |format|
       if @data_type.save
-        flash[:notice] = 'DataType was successfully created.'
+        flash[:notice] = 'File type was successfully created.'
         format.html { redirect_to(data_types_path) }
         format.xml  { render :xml => @data_type, :status => :created, :location => @data_type }
       else
@@ -61,7 +61,7 @@ class DataTypesController < ApplicationController
 
     respond_to do |format|
       if @data_type.update_attributes(params[:data_type])
-        flash[:notice] = 'DataType was successfully updated.'
+        flash[:notice] = 'File type was successfully updated.'
         format.html { redirect_to(data_types_path) }
         format.xml  { head :ok }
       else

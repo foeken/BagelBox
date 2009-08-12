@@ -12,13 +12,14 @@
   <tr>
     <th>&nbsp</th>
     <th>Name</th>
+    <th>Status</th>
   </tr>
 
 <% @data_file_filters.select{ |x| x.source_id.nil? }.each do |data_file_filter| %>
   <tr  class="<%= cycle('even','odd') %>">
     <td width="20" style="text-align:center"><%= data_file_filter.negative ? image_tag("offline.png") : image_tag("online.png") %></td>
     <td><%=h data_file_filter.name %></td>
-    <td width="80" style="text-align:right;"><%= link_to 'Show', data_file_filter %></td>
+    <td width="100"><i><%= data_file_filter.active ? "Enabled" : "<font color='crimson'>Disabled</font>" %></i></td>    
     <td width="80" style="text-align:right;"><%= link_to 'Edit', edit_data_file_filter_path(data_file_filter) %></td>
     <td width="80" style="text-align:right; padding-right: 10px;"><%= link_to 'Remove', data_file_filter, :confirm => 'Are you sure?', :method => :delete, :class=>'remove_link' %></td>
   </tr>
@@ -45,13 +46,14 @@
   <tr>
     <th>&nbsp</th>
     <th>Name</th>
+    <th>Status</th>    
   </tr>
 
 <% @data_file_filters.reject{ |x| x.source_id.nil? }.each do |data_file_filter| %>
   <tr  class="<%= cycle('even','odd') %>">
     <td width="20" style="text-align:center"><%= data_file_filter.negative ? image_tag("offline.png") : image_tag("online.png") %></td>
     <td><%=h data_file_filter.name %></td>
-    <td width="80" style="text-align:right;"><%= link_to 'Show', data_file_filter %></td>
+    <td width="100"><i><%= data_file_filter.active ? "Enabled" : "<font color='crimson'>Disabled</font>" %></i></td>        
     <td width="80" style="text-align:right;"><%= link_to 'Edit', edit_data_file_filter_path(data_file_filter) %></td>
     <td width="80" style="text-align:right; padding-right: 10px;"><%= link_to 'Remove', data_file_filter, :confirm => 'Are you sure?', :method => :delete, :class=>'remove_link' %></td>
   </tr>

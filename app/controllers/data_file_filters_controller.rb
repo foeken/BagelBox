@@ -10,17 +10,6 @@ class DataFileFiltersController < ApplicationController
     end
   end
 
-  # GET /data_file_filters/1
-  # GET /data_file_filters/1.xml
-  def show
-    @data_file_filter = DataFileFilter.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @data_file_filter }
-    end
-  end
-
   # GET /data_file_filters/new
   # GET /data_file_filters/new.xml
   def new
@@ -45,7 +34,7 @@ class DataFileFiltersController < ApplicationController
 
     respond_to do |format|
       if @data_file_filter.save
-        flash[:notice] = 'DataFileFilter was successfully created.'
+        flash[:notice] = 'Filter was successfully created.'
         format.html { redirect_to(data_file_filters_path) }
         format.xml  { render :xml => @data_file_filter, :status => :created, :location => @data_file_filter }
       else
@@ -62,7 +51,7 @@ class DataFileFiltersController < ApplicationController
 
     respond_to do |format|
       if @data_file_filter.update_attributes(params[:data_file_filter])
-        flash[:notice] = 'DataFileFilter was successfully updated.'
+        flash[:notice] = 'Filter was successfully updated.'
         format.html { redirect_to(data_file_filters_path) }
         format.xml  { head :ok }
       else
