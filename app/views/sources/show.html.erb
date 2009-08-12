@@ -58,9 +58,8 @@
         <% end %>
       
         <td><%= link_to "Download", { :controller => :sources, 
-                                   :action => :download, 
-                                   :id => @source.id, 
-                                   :data_file => data_file.to_yaml }, :method => :post %></td>
+                                      :action => :download,                                      
+                                      :data_file => data_file.to_yaml }, :method => :post %></td>
       
       </tr>
       <% if mt[:matcher] %>

@@ -2,6 +2,8 @@
 
 BagelBox is far from finished, it needs real world testing and more polish...
 
+- Contemplate replacing cron with the new whenever gem
+
 - Detect if file type meta matchars have been changed in new version and offer to merge
 
 - Auto update, if possible from within app

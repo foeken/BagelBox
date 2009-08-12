@@ -39,9 +39,7 @@ class SourcesController < ApplicationController
     @source = Source.find(params[:id])
   end
   
-  def download
-    @source = Source.find(params[:id])    
-    
+  def download    
     data_file_attributes = YAML.load(params[:data_file]).ivars["attributes"]
     data_file_attributes.delete("changed_attributes")
     data_file = DataFile.new(data_file_attributes)

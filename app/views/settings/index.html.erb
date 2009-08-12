@@ -17,9 +17,9 @@
 <p>
   
   <% if @scraper_installed %>
-    <div class="button right"><%= link_to 'Uninstall scraper', uninstall_path %></div><br/>  
+    <div class="button right"><%= link_to 'Uninstall scraper', uninstall_scraper_settings_path %></div><br/>  
   <% else %>
-    <div class="button right"><%= link_to 'Install scraper', install_path %></div><br/>
+    <div class="button right"><%= link_to 'Install scraper', install_scraper_settings_path %></div><br/>
   <% end %>
   
 </p>
