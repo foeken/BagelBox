@@ -4,10 +4,11 @@
 
 <h2>Hi there, ready to get started?</h2>
 
-<p style="border: 1px solid #ddd; padding: 5px; background: #FCFEEB;">
-Before we get started: to use BagelBox you need to install the 'wget' utility. It comes pre-installed on most linux
-distro's but it's not on osx by default. For osx download wget <%= link_to "here", "http://www.statusq.org/archives/2008/07/30/1954/", :target => "_blank" -%>.
-</p>
+<% if !Setting.wget_installed? %>
+  <p style="border: 1px solid #ddd; padding: 5px; background: #FCFEEB;">
+  Before we get started: to use BagelBox you need to install the 'wget' utility. For osx download wget <%= link_to "here", "http://www.statusq.org/archives/2008/07/30/1954/", :target => "_blank" -%>.
+  </p>
+<% end %>
 
 <p>
   I've tried to make scraping as easy as possible but there is still some stuff I need to explain.
