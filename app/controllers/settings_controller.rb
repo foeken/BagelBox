@@ -2,12 +2,23 @@ class SettingsController < ApplicationController
   # GET /settings
   # GET /settings.xml
   def index
-    @settings = Setting.all
+    @settings          = Setting.all
+    @scraper_installed = Scraper.installed?
 
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @settings }
     end
+  end
+  
+  def install_scraper
+    `rake scraper:install`
+    redirect_to(settings_path)
+  end
+  
+  def uninstall_scraper
+    `rake scraper:uninstall`
+    redirect_to(settings_path)
   end
 
   # GET /settings/new

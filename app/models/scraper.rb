@@ -1,5 +1,9 @@
 class Scraper
   
+  def self.installed?
+    return !(`crontab -l 2>&1` =~ /rake scraper:run/).nil?
+  end
+  
   def self.run options={}
     SCRAPER_LOG.info( "Started scraping run" )        
     gather_filters(options)

@@ -1,4 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
+  
+  map.install 'settings/install_scraper',     :controller => 'settings', :action => 'install_scraper'
+  map.uninstall 'settings/uninstall_scraper', :controller => 'settings', :action => 'uninstall_scraper'
+  
   map.resources :settings
 
   map.resources :data_file_filters

@@ -4,6 +4,34 @@
 
 <%= render :partial => "sub_menu" -%>
 
+<h2>Timed scraper</h2>
+
+<p>
+  One of the best features of BagelBox is that it will download stuff that matches what you are looking for without your help. It runs
+  silently in the background. For this to work you have to install the scraper, which is nothing more than a simple timed (cron) job.
+  The scraper is currently <%= @scraper_installed ? '<span class="enabled">enabled</span>' : '<span class="disabled">disabled</span>' %>.
+</p>
+
+<br />
+
+<p>
+  
+  <% if @scraper_installed %>
+    <div class="button right"><%= link_to 'Uninstall scraper', uninstall_path %></div><br/>  
+  <% else %>
+    <div class="button right"><%= link_to 'Install scraper', install_path %></div><br/>
+  <% end %>
+  
+</p>
+
+<br />
+
+<h2>General settings</h2>
+
+<p>
+  Here you can customize some of the basic settings of BagelBox like the default download dir and how ofter the scraper runs.
+</p>
+
 <table class="settings_table" cellspacing="0">
   <tr>
     <th>Description</th>

@@ -25,6 +25,16 @@ a:active {
 	color: #069;
 }
 
+.enabled {
+	font-weight: bold;
+	color: darkgreen;	
+}
+
+.disabled {
+	font-weight: bold;
+	color: crimson;
+}
+
 #header {
 	height: 100px;
 	line-height: 80px;

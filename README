@@ -47,7 +47,7 @@ your local movies directory (You don't want to download those again!).
 
 == Setting up timed scraping
 
-Run 'rake scraper:install' to install timed scraping when you have finished configuring BagelBox. Run 'rake scraper:uninstall' to revert. By default the scraper runs every 5 minutes, but you can define individual scrape intervals for each source.
+Go to the settings page and press the install button to enable timed scraping.
 
 == Advanced customization
 
