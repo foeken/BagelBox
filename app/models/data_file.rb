@@ -130,7 +130,7 @@ class DataFile < ActiveRecord::Base
       selected_priority_labels.split(',').each do |label|
        definition = data_type.get_definition(label.upcase.strip)
        if definition
-         output << definition.split('|').index( mt[label.to_sym] ) || -1
+         output << definition.split('|').index( mt[label.to_sym] ) || 1000
        end
       end
     end
