@@ -1,0 +1,14 @@
+<% form_for(@data_file_filter) do |f| %>
+<div class="content">
+  
+  <%= f.hidden_field :name %>    
+  <%= f.hidden_field :singleton %>
+  
+  <p style="text-align: center;" id="help">
+    <small><%= @data_file_filter.name %></small><br/>
+    <%= f.text_area :expression, :rows => 10, :style => 'margin-bottom: 25px;' %>
+    <%= link_to "Save", "#", :class => "add_link", :onclick => 'document.forms[0].submit();' %>    
+  </p>
+  
+</div>
+<% end %>

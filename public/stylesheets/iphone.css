@@ -67,6 +67,28 @@ small {
 	display: inline-block;
 }
 
+input[type='text'],textarea {
+	border: 1px solid #ddd;
+	outline: 0;
+	padding: 5%;
+	width: 90%;
+}
+
+textarea {
+	font-family: "Courier New";
+	background-color: #fff;
+	background-image: url('/images/input_back.jpg');
+	background-position: top;
+	background-repeat: repeat-x;
+}
+
+input[type='text'] {
+	text-align: center;
+	background: url('/images/input_back.jpg');
+	background-repeat: repeat-x;
+	font-size: 16pt;
+}
+
 .data_files_table {
 	width: 100%;
 	font-size: 9pt;

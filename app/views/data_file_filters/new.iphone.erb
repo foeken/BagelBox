@@ -1,0 +1,46 @@
+<% form_for(@data_file_filter) do |f| %>
+<div class="content">
+  
+  <%= f.hidden_field :name %>
+  <%= f.hidden_field :expression %>
+  <%= f.hidden_field :active %>
+  
+  <%= f.check_box :singleton, :style => 'display: none;' %>
+  
+  <p style="text-align:center;">
+    <input type="radio" name="expression_type[]" value="tv_show" id="type_tv_show" onchange="$('help').hide(); $('button').show(); handleExpression(this);">
+    <label for="type_tv_show">Tv show</label>
+    &nbsp; &nbsp;
+    <input type="radio" name="expression_type[]" value="movie" id="type_movie" onchange="$('help').hide(); $('button').show(); handleExpression(this);">
+    <label for="type_movie">Movie</label>
+  </p>
+
+  <p style="text-align: center;" id="help">
+    <br/>
+    Select the type of media you want.
+  </p>
+  
+  <div id="movie_field" style="display:none; text-align:center;">    
+    <small>The title of the movie</small><br/>
+    <input type="text" name="movie_title" value="" id="movie_title" onkeyup="buildExpression();">
+  </div>
+  
+  <div id="tv_show_field" style="display:none; text-align:center;">
+    <small>The name of the show</small><br/>
+    <input type="text" name="tv_show_title" value="" id="tv_show_title" onkeyup="buildExpression();" style="margin-bottom: 10px;">
+    <br/>
+    <div style="width:120px; float: left;"><small>Season</small></div>
+    <div style="width:120px; float: right;"><small>Episode</small></div>
+    <br/>
+    <input type="text" name="tv_show_season" value="" id="tv_show_season" style="width: 95px;" onkeyup="buildExpression();">
+    &nbsp;&nbsp;/&nbsp;&nbsp;
+    <input type="text" name="tv_show_episode" value="" id="tv_show_episode" style="width: 95px;" onkeyup="buildExpression();">
+  </div>
+  
+  <div id="button" style="display:none">
+    <br/>
+    <%= link_to "Save", "#", :class => "add_link", :onclick => 'document.forms[0].submit();' %>
+  </div>
+  
+</div>
+<% end %>

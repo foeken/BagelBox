@@ -21,6 +21,7 @@ class DataFileFiltersController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
+      format.iphone # new.iphone.erb
       format.xml  { render :xml => @data_file_filter }
     end
   end
@@ -39,6 +40,7 @@ class DataFileFiltersController < ApplicationController
       if @data_file_filter.save
         flash[:notice] = 'Filter was successfully created.'
         format.html { redirect_to(data_file_filters_path) }
+        format.iphone { redirect_to(data_file_filters_path) }
         format.xml  { render :xml => @data_file_filter, :status => :created, :location => @data_file_filter }
       else
         format.html { render :action => "new" }
@@ -56,6 +58,7 @@ class DataFileFiltersController < ApplicationController
       if @data_file_filter.update_attributes(params[:data_file_filter])
         flash[:notice] = 'Filter was successfully updated.'
         format.html { redirect_to(data_file_filters_path) }
+        format.iphone { redirect_to(data_file_filters_path) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

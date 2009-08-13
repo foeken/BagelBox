@@ -18,8 +18,7 @@
   <li class="<%= controller_name == "data_files" ? "selected" : "" %>"><%= link_to "Downloads", data_files_path %></li>
 </ul>
 
-<div id="body">  
-  <p style="color: green"><%= flash[:notice] %></p>
+<div id="body">
   <%= yield %>
 </div>
 
