@@ -2,8 +2,10 @@ class DataFileFiltersController < ApplicationController
   # GET /data_file_filters
   # GET /data_file_filters.xml
   def index
-    @data_file_filters = DataFileFilter.all( :order => "active,negative,name" )
-
+    @data_file_filters           = DataFileFilter.all( :order => "active,negative,name" )    
+    @manually_added_filters      = @data_file_filters.select{ |x| x.source_id.nil? }
+    @automatically_added_filters = @data_file_filters.reject{ |x| x.source_id.nil? }
+    
     respond_to do |format|
       format.html # index.html.erb
       format.iphone # index.iphone.erb

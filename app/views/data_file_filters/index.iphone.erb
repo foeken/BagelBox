@@ -2,7 +2,7 @@
   Only manually added filters are shown
 </p>
 <table class="data_files_table" cellspacing="0" cellpadding="0">
-<% @data_file_filters.select{ |x| x.source_id.nil? }.each do |data_file_filter| %>
+<% @manually_added_filters.each do |data_file_filter| %>
   <tr class="<%= cycle('even','odd') %>">
     <td nowrap="nowrap">
       <%= link_to data_file_filter.name[0..44], "#", :class => "edit_link" %>

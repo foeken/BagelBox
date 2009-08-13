@@ -15,7 +15,7 @@
     <th>Status</th>
   </tr>
 
-<% @data_file_filters.select{ |x| x.source_id.nil? }.each do |data_file_filter| %>
+<% @manually_added_filters.each do |data_file_filter| %>
   <tr  class="<%= cycle('even','odd') %>">
     <td width="20" style="text-align:center"><%= data_file_filter.negative ? image_tag("offline.png") : image_tag("online.png") %></td>
     <td><%=h data_file_filter.name %></td>
@@ -32,7 +32,7 @@
 <div class="button right"><%= link_to 'Add a new filter', new_data_file_filter_path %></div>
 </p>
 
-<% if @data_file_filters.reject{ |x| x.source_id.nil? }.length > 0 %>
+<% if @automatically_added_filters.length > 0 %>
 
 <br/>
 
@@ -49,7 +49,7 @@
     <th>Status</th>    
   </tr>
 
-<% @data_file_filters.reject{ |x| x.source_id.nil? }.each do |data_file_filter| %>
+<% @automatically_added_filters.each do |data_file_filter| %>
   <tr  class="<%= cycle('even','odd') %>">
     <td width="20" style="text-align:center"><%= data_file_filter.negative ? image_tag("offline.png") : image_tag("online.png") %></td>
     <td><%=h data_file_filter.name %></td>
