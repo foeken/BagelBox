@@ -8,22 +8,24 @@
 </div>
 
 <% else %>
-
+<div class="content">
+  <p style="text-align:center;">
+    Last 10 downloaded files.
+  </p>
+</div>
 <table class="data_files_table" cellspacing="0" cellpadding="0">
 <% @data_files.each do |data_file| %>
   <tr>
-    <td nowrap="nowrap">
-      <%= link_to data_file.filename[0..47], "#", :class => "edit_link" %>
+    <td>
+      <%= data_file.filename[0..47] %>
       <br/>
-      <center>
-        <% if data_file.downloaded_at %>
-          <small>
-            Downloaded <%= time_ago_in_words(data_file.downloaded_at) -%> ago
-          </small>
-        <% else %>
-          <%= link_to("Download now", download_data_file_path(data_file) ) %>
-        <% end %>
-      </center>
+      <% if data_file.downloaded_at %>
+        <small>
+          Downloaded <%= time_ago_in_words(data_file.downloaded_at) -%> ago
+        </small>
+      <% else %>
+        <%= link_to("Download now", download_data_file_path(data_file) ) %>
+      <% end %>
     </td>
   </tr>
 <% end %>

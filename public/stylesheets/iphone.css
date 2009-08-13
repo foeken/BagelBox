@@ -74,6 +74,14 @@ small {
 
 .data_files_table td {
 	padding: 7px 5px 0px 5px;
+	background:	-webkit-gradient(linear, left bottom, left top, from(#ddd), color-stop(1, #fff));
+	height: 50px;
+	padding: 5px 0px 5px 0px;
+	border-top: 1px solid white;
+	border-bottom: 1px solid #C9C9C9;
+	-webkit-box-shadow: 0px -1px 2px #CFCFCF;
+	text-align:center;
+	color: #525252;
 }
 
 .add_link {
@@ -92,19 +100,4 @@ small {
 	-webkit-box-shadow: 0px 0px 3px #aaa;
 	cursor:pointer;
 	margin-right: 10px;
-}
-
-.edit_link {
-	text-decoration: none;
-	color: #494949;
-	font-size: 9pt;
-	
-	width: 95%;
-	padding: 2% 0% 2% 5%;
-	margin-bottom: 5px;
-	
-	display:inline-block;
-	-webkit-border-radius: 10px;
-	background:	-webkit-gradient(linear, left bottom, left top, from(#ddd), color-stop(1, #fff));
-	-webkit-box-shadow: 0px 0px 3px #aaa;	
 }

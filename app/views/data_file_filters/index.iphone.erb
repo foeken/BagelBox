@@ -1,16 +1,15 @@
 <div class="content">
-  <p>
-    <%= link_to "Add a new filter", "#", :class => "add_link" %>
-  </p>
-  <p>
-    Only manually added filters are shown
+  <p style="text-align:center;">
+    Only manually added filters are shown.
   </p>
 </div>
 <table class="data_files_table" cellspacing="0" cellpadding="0">
 <% @manually_added_filters.each do |data_file_filter| %>
   <tr>
-    <td nowrap="nowrap">
-      <%= link_to data_file_filter.name[0..44], "#", :class => "edit_link" %>
+    <td>
+      <%= data_file_filter.name[0..44] %>
+      <br/>
+      <%= link_to "Edit this filter", edit_data_file_filter_path(data_file_filter) %>
     </td>
   </tr>
 <% end %>
