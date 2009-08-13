@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090811200130) do
+ActiveRecord::Schema.define(:version => 20090813220900) do
 
   create_table "data_file_filters", :force => true do |t|
     t.string   "name"
@@ -32,6 +32,8 @@ ActiveRecord::Schema.define(:version => 20090811200130) do
     t.datetime "updated_at"
     t.boolean  "downloaded",    :default => false
     t.datetime "downloaded_at"
+    t.boolean  "failed",        :default => false
+    t.boolean  "downloading",   :default => false
   end
 
   create_table "data_types", :force => true do |t|

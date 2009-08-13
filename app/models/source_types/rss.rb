@@ -5,7 +5,22 @@ class SourceTypes::Rss < SourceTypes::SourceType
   end
   
   def self.download location, to
-    `cd #{to} && wget -b #{location} --content-disposition --tries=5 --retry-connrefused --random-wait -o /dev/null`
+    output = []
+    
+    IO.popen("cd #{to} && wget #{location} --content-disposition --tries=5 --retry-connrefused --random-wait 2>&1", "r") do |pipe| 
+      output << pipe.read
+    end
+    
+    status = $?
+    
+    if status.success?
+      SCRAPER_LOG.error( "[RSS] Sucessfully downloaded file: #{location}" )
+      return true
+    else
+      SCRAPER_LOG.error( "[RSS] Failed to download file: #{location}" )
+      return false
+    end
+    
   end
   
   def self.data location,source=nil

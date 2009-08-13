@@ -9,8 +9,8 @@ class DataFilesController < ApplicationController
     end
   end
   
-  def download
-    DataFile.find(params[:id]).download
+  def download    
+    DataFile.find(params[:id]).download_in_background
     redirect_to(data_files_path)
   end
   

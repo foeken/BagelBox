@@ -49,8 +49,8 @@ class Scraper
         SCRAPER_LOG.info( "Selected match with highest priority: #{sorted_data_file_group.first.source.name}" )                        
       end
       
+      selected_data_file.download_in_background
       # selected_data_file.queue_to_download
-      selected_data_file.download
       
       begin
         dff = selected_data_file.to_date_file_filter
@@ -70,8 +70,15 @@ class Scraper
     SCRAPER_LOG.info( "Deactivating #{successful_filters.length} succesful singleton filter(s)" )
     successful_filters.each{ |f| f.deactivate }
     
+    handle_download_queue
+    
     return true
     
+  end
+  
+  # Creates a queue for each source
+  def self.handle_download_queue    
+    # TODO    
   end
   
   # Run through the various filter sources and define new filters as we go along

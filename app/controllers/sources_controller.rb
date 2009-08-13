@@ -43,11 +43,8 @@ class SourcesController < ApplicationController
     data_file_attributes = YAML.load(params[:data_file]).ivars["attributes"]
     data_file_attributes.delete("changed_attributes")
     data_file = DataFile.new(data_file_attributes)
-    data_file.queue_to_download
-    data_file.download
-    flash[:notice] = 'Content was placed in download queue and is downloading...'
-    
-    redirect_to(data_files_path)
+    data_file.queue_to_download        
+    redirect_to(data_files_path)    
   end
 
   # POST /sources

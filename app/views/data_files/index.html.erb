@@ -18,10 +18,7 @@
     <th>&nbsp;</th>
     <th style="text-align: left;">Name</th>
     <th style="text-align: left;">Source</th>
-    <th style="text-align: left;">Category</th>
-    <th style="text-align: left;">File type</th>
     <th style="text-align: left;">Status</th>
-    <th>&nbsp;</th>
   </tr>
 
 <% @data_files.each do |data_file| %>
@@ -29,10 +26,17 @@
     <td width="20" style="text-align:center"><%= data_file.downloaded ? image_tag("online.png") : image_tag("offline.png") %></td>
     <td><%= link_to data_file.filename, data_file.location, :title => data_file.meta_data(:skip => [:matcher,:filename,:category,:source_name,:location]).to_yaml %></td>
     <td><%= link_to data_file.source.name, edit_source_path(data_file.source) %></td>
-    <td><%=h data_file.category %></td>
-    <td><%= data_file.data_type ? link_to(data_file.data_type.name, edit_data_type_path(data_file.data_type)) : "NONE" %></td>
-    <td><%=h data_file.downloaded_at ? "Download started #{time_ago_in_words(data_file.downloaded_at)} ago" : "Queued for download" %></td>
-    <td><%= data_file.downloaded ? "&nbsp;" : link_to("Download now", download_data_file_path(data_file) ) %></td>
+    <td>
+      <% if data_file.failed %>
+        <span style="color:crimson;">FAILED</span> <%= link_to "Retry?", download_data_file_path(data_file) -%>
+      <% elsif data_file.downloading %>
+        Downloading
+      <% elsif data_file.downloaded %>
+        Completed
+      <% else %>
+        <%= link_to "Download now", download_data_file_path(data_file) -%>
+      <% end %>
+    </td>
   </tr>
 <% end %>
 </table>

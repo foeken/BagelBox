@@ -102,11 +102,21 @@ class DataFile < ActiveRecord::Base
     self.save!
   end
   
-  def download
-    self.downloaded    = true
-    self.downloaded_at = DateTime.now
-    self.save!
-    source.download(location)
+  def download_in_background
+    self.download( :fork => true )
+  end
+    
+  def download options={}    
+    raise "File is already downloading" if self.downloading
+    
+    reset_data_file_download_status    
+    if options[:fork]
+      p = Process.fork { handle_download_result( source.download(location) ) }
+      Process.detach(p)
+      return p
+    else
+      return handle_download_result( source.download(location) )
+    end    
   end
   
   def priority_label_score
@@ -140,6 +150,30 @@ class DataFile < ActiveRecord::Base
   # Sort the data files based on their source priority and label score
   def self.sort data_files
     return data_files.sort_by{ |d| [d.source.priority] + d.priority_label_score }
+  end
+  
+  private
+  
+  def reset_data_file_download_status
+    self.downloaded    = false
+    self.downloaded_at = nil
+    self.downloading   = true
+    self.failed        = false
+    self.save!
+  end
+  
+  def handle_download_result success
+    self.downloading   = false
+        
+    if success      
+      self.downloaded    = true
+      self.downloaded_at = DateTime.now
+    else
+      self.failed        = true
+    end    
+    
+    self.save!
+    return success
   end
   
 end
