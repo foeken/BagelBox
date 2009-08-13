@@ -16,10 +16,6 @@ a {
 	color: #39c;
 	cursor: pointer;
 }
- 
-a:active {
-	color: #069;
-}
 
 small {
 	color: #999;
@@ -28,6 +24,10 @@ small {
 
 #body {
 	margin-top: 80px;
+}
+
+#body .content {
+	padding: 0px 20px 0px 20px;
 }
 
 #main_menu {
@@ -76,9 +76,6 @@ small {
 	padding: 7px 5px 0px 5px;
 }
 
-.even {}
-.odd {}
-
 .add_link {
 	text-decoration: none;
 	color: #494949;
@@ -101,14 +98,13 @@ small {
 	text-decoration: none;
 	color: #494949;
 	font-size: 9pt;
-	display:inline-block;
+	
 	width: 95%;
 	padding: 2% 0% 2% 5%;
 	margin-bottom: 5px;
-	background: #eee;
+	
+	display:inline-block;
 	-webkit-border-radius: 10px;
 	background:	-webkit-gradient(linear, left bottom, left top, from(#ddd), color-stop(1, #fff));
-	-webkit-box-shadow: 0px 0px 3px #aaa;
-	cursor:pointer;
-	margin-right: 10px;
+	-webkit-box-shadow: 0px 0px 3px #aaa;	
 }
