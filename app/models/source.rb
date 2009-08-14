@@ -3,12 +3,21 @@ class Source < ActiveRecord::Base
   has_many :data_files, :dependent => :destroy
   has_many :data_file_filters, :dependent => :destroy
   
+  named_scope :filter, :conditions => ["filter_source = ?",true]
+  named_scope :content, :conditions => ["filter_source = ?",false]    
+  named_scope :active, :conditions => ["active = ?",true]
+  named_scope :queued, :conditions => ["queued = ?",true]
+    
   def parsed_options
     output = {}
     options.scan(/(.*?):\"(.*?)\"/i).each do |label,value|      
       output[label.to_sym] = value
     end
     return output
+  end
+  
+  def downloading?
+    return !data_files.downloading.empty?
   end
   
   def uri

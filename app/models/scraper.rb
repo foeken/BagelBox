@@ -70,15 +70,23 @@ class Scraper
     SCRAPER_LOG.info( "Deactivating #{successful_filters.length} succesful singleton filter(s)" )
     successful_filters.each{ |f| f.deactivate }
     
-    handle_download_queue
+    handle_download_queues
     
     return true
     
   end
   
-  # Creates a queue for each source
-  def self.handle_download_queue    
-    # TODO    
+  # Creates a queue for each source that is queued, otherwise it just downloads all the files.
+  def self.handle_download_queues
+    Source.active.content.each do |source|
+      if source.queued
+        # Start downloading first file out of the queue is source is not already downloading
+        source.data_files.queued.first.download_in_background( :follow_queue => true ) unless source.downloading?
+      else
+        # Download all the files right now
+        source.data_files.queued.map(&:download)
+      end
+    end
   end
   
   # Run through the various filter sources and define new filters as we go along
@@ -107,7 +115,7 @@ class Scraper
   
   # Select the sources that may be scraped at this moment
   def self.scrapable_sources filter, options={}
-    sources = Source.find_all_by_filter_source_and_active(filter,true)
+    sources = Source.active.find_all_by_filter_source(filter)
     
     return sources if options[:ignore_scrape_interval]
     

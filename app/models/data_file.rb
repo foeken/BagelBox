@@ -4,6 +4,11 @@ class DataFile < ActiveRecord::Base
   belongs_to :source
   validates_presence_of :data_type
     
+  named_scope :failed, :conditions => ["failed = ?",true]
+  named_scope :downloaded, :conditions => ["downloaded = ? AND failed = ?",true,false]
+  named_scope :downloading, :conditions => ["downloading = ?",true]
+  named_scope :queued, :conditions => ["downloaded = ? AND failed = ? AND downloading = ?",false,false,false]
+  
   # Return the data file category based on the category of the source or if no source category is given
   # it will try to guess using the meta data.
   def category mt=nil
@@ -102,16 +107,25 @@ class DataFile < ActiveRecord::Base
     self.save!
   end
   
-  def download_in_background
-    self.download( :fork => true )
+  def download_in_background options={}
+    self.download( options.merge( { :fork => true } ) )
   end
     
   def download options={}    
-    raise "File is already downloading" if self.downloading
+    raise "File is already downloading"   if self.downloading
     
     reset_data_file_download_status    
     if options[:fork]
-      p = Process.fork { handle_download_result( source.download(location) ) }
+      
+      p = Process.fork do 
+        handle_download_result( source.download(location) )
+        
+        if options[:follow_queue] && !source.downloading?
+          queue = source.data_files.queued
+          queue.first.download_in_background( :follow_queue => true ) unless queue.empty?
+        end        
+      end
+      
       Process.detach(p)
       return p
     else
