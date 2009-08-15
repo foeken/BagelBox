@@ -5,16 +5,23 @@ class DataFileFilter < ActiveRecord::Base
   validates_presence_of :expression  
   validate :no_duplicate_filters
 
+  named_scope :active,   :conditions => ["active = ?",true]
+  named_scope :negative, :conditions => ["negative = ?",true]
+  named_scope :positive, :conditions => ["negative = ?",false]
+
+  # Activate this filter, including it in matches
   def activate
     self.active = true
     save!
   end
   
+  # Disable this filter, exclusing it in matches
   def deactivate
     self.active = false
     save!
   end
   
+  # Returns the expression string in hash format
   def parsed_expression
     output = {}
     expression.scan(/(.*?):\"(.*?)\"/i).each do |label,value|
@@ -23,11 +30,13 @@ class DataFileFilter < ActiveRecord::Base
     return output
   end
   
+  # Determine if any filter matches the given DataFile or meta data hash
   def self.match data_file=nil, meta_data={}, options={}
     filters = options[:include_inactive] ? DataFileFilter.all : DataFileFilter.find_all_by_active(true)
     return filters.reject{ |f| f.match(data_file,meta_data) == :no_match }    
   end
   
+  # Determine if this filter matches the given DataFile or meta data hash
   def match data_file=nil, meta_data={}
     mt = data_file ? data_file.meta_data : meta_data
     parsed_expression.each do |key,value|                  
@@ -43,12 +52,14 @@ class DataFileFilter < ActiveRecord::Base
     end    
   end
   
+  # String representation of this filter
   def to_s
     parsed_expression.to_json
   end
   
   private
   
+  # Prevent having two overlapping filters at the same time
   def no_duplicate_filters
     return true if !active
     DataFileFilter.find_all_by_active(true).each do |other|

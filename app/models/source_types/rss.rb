@@ -14,7 +14,7 @@ class SourceTypes::Rss < SourceTypes::SourceType
     status = $?
     
     if status.success?
-      SCRAPER_LOG.error( "[RSS] Sucessfully downloaded file: #{location}" )
+      SCRAPER_LOG.info( "[RSS] Sucessfully downloaded file: #{location}" )
       return true
     else
       SCRAPER_LOG.error( "[RSS] Failed to download file: #{location}" )

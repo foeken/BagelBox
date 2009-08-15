@@ -1,3 +1,6 @@
+# DataFiles are the downloadables of BagelBox. A datafile can be of any DataType. Depending on that type
+# it's meta data is gathered. It can be downloaded using the the DataFile's source type (Rss, Ftp, ...)
+# download method. 
 class DataFile < ActiveRecord::Base
   
   belongs_to :data_type  
@@ -52,6 +55,9 @@ class DataFile < ActiveRecord::Base
   
   # Convert this data type's meta tags to a data file filter
   def to_data_file_filter labels=nil
+    
+    raise "Connot convert to data file filter without labels" if !source.filter_labels && !labels
+        
     labels = source.filter_labels.split(',').map(&:to_sym) unless labels
     
     df = DataFileFilter.new
@@ -84,11 +90,11 @@ class DataFile < ActiveRecord::Base
   end
   
   # Runs the active data file filters and returns the status and affected filters.
-  # Return values are :accepted , :rejected or :no_match
+  # Return values are :accepted, :rejected or :no_match
   def run_filters
     status            = :no_match
     matching_filters  = []    
-    DataFileFilter.find_all_by_active(true).each do |filter|
+    DataFileFilter.active.each do |filter|
       case filter.match(self)
         when :positive_match
           status = :accepted if status == :no_match
@@ -102,16 +108,19 @@ class DataFile < ActiveRecord::Base
     end
     return [status,matching_filters]
   end
-      
+  
+  # Places this DataFile into the download queue
   def queue_to_download
     self.save!
   end
   
+  # Download this DataFile in the background by forking this process
   def download_in_background options={}
     self.download( options.merge( { :fork => true } ) )
   end
-    
-  def download options={}    
+  
+  # Download this DataFile using the SourceType's download method
+  def download options={}
     raise "File is already downloading"   if self.downloading
     
     reset_data_file_download_status    
@@ -133,10 +142,13 @@ class DataFile < ActiveRecord::Base
     end    
   end
   
-  def priority_label_score
+  # Determine the priority score (an array of integers) based on each priority label
+  def priority_label_score labels=nil
     output = []
     
-    if source.priority_labels.blank?
+    if labels
+      selected_priority_labels = labels.map(&:to_s)
+    elsif source.priority_labels.blank?
       case source.category
         when "movie"
           selected_priority_labels = "quality,edition"
@@ -144,14 +156,16 @@ class DataFile < ActiveRecord::Base
           selected_priority_labels = "quality"
         else
           selected_priority_labels = ""
-      end        
+      end
+      
+      selected_priority_labels = selected_priority_labels.split(',')
     else
-      selected_priority_labels = source.priority_labels
+      selected_priority_labels = source.priority_labels.split(',')
     end
         
     if data_type && !selected_priority_labels.blank?
       mt = meta_data            
-      selected_priority_labels.split(',').each do |label|
+      selected_priority_labels.each do |label|
        definition = data_type.get_definition(label.upcase.strip)
        if definition
          output << definition.split('|').index( mt[label.to_sym] ) || 1000
@@ -162,12 +176,13 @@ class DataFile < ActiveRecord::Base
   end
   
   # Sort the data files based on their source priority and label score
-  def self.sort data_files
-    return data_files.sort_by{ |d| [d.source.priority] + d.priority_label_score }
+  def self.sort data_files, labels=nil
+    return data_files.sort_by{ |d| [d.source.priority] + d.priority_label_score(labels) }
   end
   
   private
   
+  # Resets the download, failed, downloading flags and nils the downloaded_at field
   def reset_data_file_download_status
     self.downloaded    = false
     self.downloaded_at = nil
@@ -176,6 +191,7 @@ class DataFile < ActiveRecord::Base
     self.save!
   end
   
+  # Handle the succes/failure of a download by setting the appropiate flags
   def handle_download_result success
     self.downloading   = false
         
