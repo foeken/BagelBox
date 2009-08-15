@@ -3,5 +3,6 @@ tmp/**/*
 doc/api
 doc/app
 downloads/*
+db/test.sqlite3
 db/production.sqlite3
 db/development.sqlite3
