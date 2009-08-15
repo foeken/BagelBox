@@ -4,8 +4,7 @@
 
 <% form_for(@data_file_filter) do |f| %>
   <%= f.error_messages %>
-    
-    
+      
     <% clashes = @data_file_filter.clashes( :include_deactivated => @data_file_filter.negative ).collect{ |d| link_to d.name, edit_data_file_filter_path(d) } %>
     <% if @data_file_filter.negative and !clashes.empty? %>
       <div id="notice">
@@ -55,7 +54,7 @@
         <td width="170"><%= f.label :active %></td>
         <td>
           <% if !@data_file_filter.negative and !clashes.empty? %>
-            <small style="color: crimson">This filter cannot be activated due to clashing negative filters: <%= clashes.to_sentence %></small>
+            <small style="color: crimson">This filter cannot be activated due to the existence of more generic negative filters: <%= clashes.to_sentence %></small>
           <% else %>
             <%= f.check_box :active %><small>Only active filters are applied during scraping.</small>
           <% end %>
