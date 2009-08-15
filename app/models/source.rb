@@ -20,6 +20,26 @@ class Source < ActiveRecord::Base
     return !data_files.downloading.empty?
   end
   
+  def start_downloading options={}
+    if queued || options[:force_queued]
+      # Handle queue one-by-one
+      if self.downloading?
+        SCRAPER_LOG.error( "Skipped download start for '#{self.name}': Source is already downloading." )
+      elsif !self.data_files.queued.empty? 
+        self.data_files.queued.first.download_in_background( :follow_queue => true )
+      end
+    else
+      # Download all queued file right now
+      self.data_files.queued.each do |file|
+        begin 
+          file.download
+        rescue Esception => e
+          SCRAPER_LOG.error( "Skipped dowloading '#{file}': #{e.message}" )
+        end
+      end
+    end
+  end
+  
   def uri
     URI.parse(location)
   end

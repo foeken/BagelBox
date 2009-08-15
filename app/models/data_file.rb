@@ -122,6 +122,7 @@ class DataFile < ActiveRecord::Base
   # Download this DataFile using the SourceType's download method
   def download options={}
     raise "File is already downloading"   if self.downloading
+    raise "File is already downloaded"    if self.downloaded
     
     reset_data_file_download_status    
     if options[:fork]

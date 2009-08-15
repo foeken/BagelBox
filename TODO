@@ -2,6 +2,10 @@
 
 BagelBox is far from finished, it needs real world testing and more polish...
 
+- More specs
+
+- KNOWN ISSUE: if you have a generic filter it will only match once per scraper run, even if there are multiple matching options.
+
 - Contemplate replacing cron with the new whenever gem
 
 - Detect if file type meta matchars have been changed in new version and offer to merge
@@ -13,10 +17,6 @@ BagelBox is far from finished, it needs real world testing and more polish...
 - Make sure current UI is cross-browser
 
 - iPhone specific interface for adding/enabling filters and watching downloads
-
-- Instead of downloading the data_file directly store it in the database, so we can do queued downloading (optional per source: ftp!)
-
-- Verify download before deactivating filters (combine with queue?)
 
 - Handle failed downloads gracefully, make sure they are not matched again?
 

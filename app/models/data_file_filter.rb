@@ -8,17 +8,50 @@ class DataFileFilter < ActiveRecord::Base
   named_scope :active,   :conditions => ["active = ?",true]
   named_scope :negative, :conditions => ["negative = ?",true]
   named_scope :positive, :conditions => ["negative = ?",false]
-
+  
+  after_save :deactivate_clashing_filters
+  
   # Activate this filter, including it in matches
   def activate
     self.active = true
-    save!
+    self.save!
   end
   
   # Disable this filter, exclusing it in matches
   def deactivate
     self.active = false
-    save!
+    self.save!
+  end
+  
+  # Determines if the expressions clash
+  def expression_clash? other
+    my_expression    = parsed_expression
+    other_expression = other.parsed_expression  
+        
+    if !(my_expression.keys & other_expression.keys).empty?
+      # If we have any matching keys
+      
+      if my_expression.keys.length > other_expression.keys.length
+        # My expression is more specific
+        return false
+      elsif other_expression.keys.length > my_expression.keys.length
+        # My expression is more generic
+        return true
+      elsif my_expression.keys.length == other_expression.keys.length
+        # Same expression, let's look at the values
+        different = false
+        my_expression.each do |key,value|
+          if other_expression[key] && value != other_expression[key]
+            different = true
+            # If have different values, so we don't clash!
+            return false
+          end
+        end     
+        return true
+      end
+    end
+    # Different sets of keys
+    return false    
   end
   
   # Returns the expression string in hash format
@@ -58,39 +91,24 @@ class DataFileFilter < ActiveRecord::Base
   end
   
   private
+    
+  # Deactivates any positive filter that matches a negative filter
+  def deactivate_clashing_filters
+    DataFileFilter.active.negative.each do |negative_filter|
+      DataFileFilter.active.positive.each do |positive_filter|
+        positive_filter.deactivate if negative_filter.expression_clash?(positive_filter)
+      end
+    end
+  end
   
   # Prevent having two overlapping filters at the same time
   def no_duplicate_filters
     return true if !active
-    DataFileFilter.find_all_by_active(true).each do |other|
-
+    DataFileFilter.find_all_by_active_and_negative(true,self.negative).each do |other|
       next if other.id == id # Skip myself
-
-      other_expression = other.parsed_expression
-      my_expression    = parsed_expression
-
-      # If I have less labels to worry about, then I am more generic. Thus I can be saved.
-      if my_expression.keys.length < other_expression.keys.length
-        next
-      elsif my_expression.keys.length >= other_expression.keys.length && !(my_expression.keys & other_expression.keys).empty?
-        # I have one or more the same labels as the other filter
-
-        different = false
-        my_expression.each do |key,value|
-          if other_expression[key] && value != other_expression[key]
-            different = true
-            break
-          end
-        end
-
-        next if different
-        errors.add(:expression,"Must not conflict with other expressions. This on conflicts with '#{other.name}'")
-
-      else
-        # I have different keys.
-        next
+      if expression_clash? other
+        errors.add(:expression, "must not conflict with other expressions. This on conflicts with '#{other.name}'")
       end
-
     end
     return true
   end

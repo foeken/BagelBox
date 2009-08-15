@@ -11,7 +11,7 @@ class Scraper
   end
   
   # Run through the various defined sources and scrape them for content to download.
-  def self.filter_and_download options={}   
+  def self.filter_and_download options={}
     accepted_data_files = []
     successful_filters  = []
     data_files          = scrapable_sources(false,options).collect(&:data).flatten
@@ -69,26 +69,13 @@ class Scraper
     successful_filters = successful_filters.uniq.select{ |f| f.singleton }
     SCRAPER_LOG.info( "Deactivating #{successful_filters.length} succesful singleton filter(s)" )
     successful_filters.each{ |f| f.deactivate }
-    
-    handle_download_queues
-    
+  
+    Source.active.content.each{ |source| source.start_downloading }
+        
     return true
     
   end
-  
-  # Creates a queue for each source that is queued, otherwise it just downloads all the files.
-  def self.handle_download_queues
-    Source.active.content.each do |source|
-      if source.queued
-        # Start downloading first file out of the queue is source is not already downloading
-        source.data_files.queued.first.download_in_background( :follow_queue => true ) unless source.downloading?
-      else
-        # Download all the files right now
-        source.data_files.queued.map(&:download)
-      end
-    end
-  end
-  
+    
   # Run through the various filter sources and define new filters as we go along
   def self.gather_filters options={}
     scrapable_sources(true,options).each do |source|
