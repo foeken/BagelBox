@@ -81,11 +81,19 @@ describe DataFileFilter do
     DataFileFilter.last.active.should be_false
     DataFileFilter.last.destroy
     
+    DataFileFilter.create!( :expression => "title:\"prison break\"" )
+    DataFileFilter.last.active.should be_false
+    DataFileFilter.last.destroy
+    
     DataFileFilter.create!( :expression => "title:\"Burn notice\"" )
     DataFileFilter.last.active.should be_true
     DataFileFilter.last.destroy
     
     DataFileFilter.create!( :expression => "title:\"Prison Break\"\r\nseason:\"04\"" )
+    DataFileFilter.last.active.should be_false
+    DataFileFilter.last.destroy
+    
+    DataFileFilter.create!( :expression => "title:\"prison break\"\r\nseason:\"04\"" )
     DataFileFilter.last.active.should be_false
     DataFileFilter.last.destroy
     

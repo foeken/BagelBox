@@ -59,7 +59,7 @@ class DataFileFilter < ActiveRecord::Base
         # Same expression, let's look at the values
         different = false
         my_expression.each do |key,value|
-          if other_expression[key] && value != other_expression[key]
+          if other_expression[key] && value.strip.downcase != other_expression[key].strip.downcase
             different = true
             # If have different values, so we don't clash!
             return false
