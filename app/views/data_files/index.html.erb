@@ -25,16 +25,16 @@
   <tr class="<%= cycle('even','odd') %>">
     <td width="20" style="text-align:center"><%= data_file.downloaded ? image_tag("online.png") : image_tag("offline.png") %></td>
     <td><%= link_to data_file.filename, data_file.location, :title => data_file.meta_data(:skip => [:matcher,:filename,:category,:source_name,:location]).to_yaml %></td>
-    <td><%= link_to data_file.source.name, edit_source_path(data_file.source) %></td>
-    <td>
+    <td width="150"><%= link_to data_file.source.name, edit_source_path(data_file.source) %></td>
+    <td width="250">
       <% if data_file.failed %>
         <span style="color:crimson;">FAILED</span> <%= link_to "Retry?", download_data_file_path(data_file) -%>
       <% elsif data_file.downloading %>
-        Downloading
+        Downloading since <%= time_ago_in_words(data_file.updated_at) %> ago
       <% elsif data_file.downloaded %>
         Completed
       <% else %>
-        <%= link_to "Download now", download_data_file_path(data_file) -%>
+        Queued
       <% end %>
     </td>
   </tr>

@@ -19,13 +19,17 @@
     <td>
       <%= data_file.filename[0..47] %>
       <br/>
-      <% if data_file.downloaded_at %>
-        <small>
-          Downloaded <%= time_ago_in_words(data_file.downloaded_at) -%> ago
-        </small>
+      <small>
+      <% if data_file.failed %>
+        <span style="color:crimson;">FAILED</span> <%= link_to "Retry?", download_data_file_path(data_file) -%>
+      <% elsif data_file.downloading %>
+        Downloading since <%= time_ago_in_words(data_file.updated_at) %> ago
+      <% elsif data_file.downloaded %>
+        Completed
       <% else %>
-        <%= link_to("Download now", download_data_file_path(data_file) ) %>
+        Queued
       <% end %>
+      </small>
     </td>
   </tr>
 <% end %>
