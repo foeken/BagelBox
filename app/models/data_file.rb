@@ -116,7 +116,11 @@ class DataFile < ActiveRecord::Base
   
   # Download this DataFile in the background by forking this process
   def download_in_background options={}
-    self.download( options.merge( { :fork => true } ) )
+    begin
+      self.download( options.merge( { :fork => true } ) )
+    rescue Exception => e
+      SCRAPER_LOG.error( "Skipped dowloading '#{location}': #{e.message}" )
+    end
   end
   
   # Download this DataFile using the SourceType's download method
@@ -124,10 +128,11 @@ class DataFile < ActiveRecord::Base
     raise "File is already downloading"   if self.downloading
     raise "File is already downloaded"    if self.downloaded
     
-    reset_data_file_download_status    
+    reset_data_file_download_status
+    
     if options[:fork]
       
-      p = Process.fork do 
+      p = Process.fork do
         handle_download_result( source.download(location) )
         
         if options[:follow_queue] && !source.downloading?

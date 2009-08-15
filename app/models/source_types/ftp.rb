@@ -4,8 +4,22 @@ class SourceTypes::Ftp < SourceTypes::SourceType
     "Ftp"
   end
   
-  def self.download location, to
-    `cd #{to} && wget -b #{location} -o /dev/null`
+  def self.download location, to    
+    output = []
+    
+    IO.popen("cd #{to} && wget #{location} --tries=5 --retry-connrefused --random-wait 2>&1", "r") do |pipe| 
+      output << pipe.read
+    end
+    
+    status = $?
+    
+    if status.success?
+      SCRAPER_LOG.info( "[FTP] Sucessfully downloaded file: #{location}" )
+      return true
+    else
+      SCRAPER_LOG.error( "[FTP] Failed to download file: #{location}" )
+      return false
+    end
   end
   
   def self.data location,source=nil

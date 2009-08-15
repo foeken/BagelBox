@@ -69,7 +69,8 @@ class Scraper
     successful_filters = successful_filters.uniq.select{ |f| f.singleton }
     SCRAPER_LOG.info( "Deactivating #{successful_filters.length} succesful singleton filter(s)" )
     successful_filters.each{ |f| f.deactivate }
-  
+    
+    # Tell the active content sources it's OK to start downloading now
     Source.active.content.each{ |source| source.start_downloading }
         
     return true

@@ -21,7 +21,7 @@ class Source < ActiveRecord::Base
   end
   
   def start_downloading options={}
-    if queued || options[:force_queued]
+    if self.queued || options[:force_queued]
       # Handle queue one-by-one
       if self.downloading?
         SCRAPER_LOG.error( "Skipped download start for '#{self.name}': Source is already downloading." )
@@ -31,11 +31,7 @@ class Source < ActiveRecord::Base
     else
       # Download all queued file right now
       self.data_files.queued.each do |file|
-        begin 
-          file.download
-        rescue Esception => e
-          SCRAPER_LOG.error( "Skipped dowloading '#{file}': #{e.message}" )
-        end
+        file.download_in_background
       end
     end
   end

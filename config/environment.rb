@@ -9,6 +9,7 @@ require 'open-uri'
 require 'uri'
 require 'net/ftp'
 require 'rss/2.0'
+require 'ftools'
 
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence over those specified here.

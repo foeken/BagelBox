@@ -4,6 +4,17 @@ class SourceTypes::Directory < SourceTypes::SourceType
     "Directory"
   end
   
+  def self.download location, to
+    begin
+      File.copy( File.expand_path(location), File.expand_path(to) )
+      SCRAPER_LOG.info( "[DIRECTORY] Sucessfully copied file: #{location}" )
+      return true
+    rescue Exception => e
+      SCRAPER_LOG.error( "[DIRECTORY] Failed to copy file '#{location}': #{e.message}" )
+      return false
+    end
+  end
+  
   def self.data location,source=nil
     output = get_files(location).map do |filename|
       data_type = ::DataType.for(File.basename(filename))      
