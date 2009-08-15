@@ -50,7 +50,10 @@ class DataFileFilter < ActiveRecord::Base
         # My expression is more specific
         return false
       elsif other_expression.keys.length > my_expression.keys.length
-        # My expression is more generic
+        # My expression is more generic if the keys that are the same MATCH
+        (my_expression.keys & other_expression.keys).each do |key|
+          return false if my_expression[key] != other_expression[key]
+        end        
         return true
       elsif my_expression.keys.length == other_expression.keys.length
         # Same expression, let's look at the values

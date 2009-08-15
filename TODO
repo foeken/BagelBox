@@ -4,6 +4,8 @@ BagelBox is far from finished, it needs real world testing and more polish...
 
 - More specs
 
+- Better generated filter names (based on meta data)
+
 - KNOWN ISSUE: if you have a generic filter it will only match once per scraper run, even if there are multiple matching options.
 
 - Contemplate replacing cron with the new whenever gem

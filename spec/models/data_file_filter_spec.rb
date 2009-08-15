@@ -81,8 +81,16 @@ describe DataFileFilter do
     DataFileFilter.last.active.should be_false
     DataFileFilter.last.destroy
     
+    DataFileFilter.create!( :expression => "title:\"Burn notice\"" )
+    DataFileFilter.last.active.should be_true
+    DataFileFilter.last.destroy
+    
     DataFileFilter.create!( :expression => "title:\"Prison Break\"\r\nseason:\"04\"" )
     DataFileFilter.last.active.should be_false
+    DataFileFilter.last.destroy
+    
+    DataFileFilter.create!( :expression => "title:\"Burn notice\"\r\nseason:\"04\"" )
+    DataFileFilter.last.active.should be_true
     DataFileFilter.last.destroy
     
     negative.expression = "title:\"Prison Break\"\r\nseason:\"04\""
@@ -95,7 +103,7 @@ describe DataFileFilter do
     DataFileFilter.create!( :expression => "title:\"Prison Break\"\r\nseason:\"04\"" )
     DataFileFilter.last.active.should be_false
     DataFileFilter.last.destroy
-    
+        
     negative.update_attribute(:negative,false)
     
     DataFileFilter.create!( :expression => "title:\"Prison Break\"", :negative => true )
