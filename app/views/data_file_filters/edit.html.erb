@@ -4,7 +4,18 @@
 
 <% form_for(@data_file_filter) do |f| %>
   <%= f.error_messages %>
-
+    
+    
+    <% clashes = @data_file_filter.clashes( :include_deactivated => @data_file_filter.negative ).collect{ |d| link_to d.name, edit_data_file_filter_path(d) } %>
+    <% if @data_file_filter.negative and !clashes.empty? %>
+      <div id="notice">
+        <b>Note:</b> 
+        <% if @data_file_filter.negative %>
+          This filter has disabled the following positive filter(s): <%= clashes.to_sentence %>
+        <% end %>
+      </div>
+    <% end %>
+    
     <table class="input_table">
       
       <tr id="custom_field">
@@ -43,7 +54,11 @@
       <tr>
         <td width="170"><%= f.label :active %></td>
         <td>
-          <%= f.check_box :active %><small>Only active filters are applied during scraping.</small>
+          <% if !@data_file_filter.negative and !clashes.empty? %>
+            <small style="color: crimson">This filter cannot be activated due to clashing negative filters: <%= clashes.to_sentence %></small>
+          <% else %>
+            <%= f.check_box :active %><small>Only active filters are applied during scraping.</small>
+          <% end %>
         </td>
       </tr>
 

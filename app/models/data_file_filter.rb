@@ -23,6 +23,21 @@ class DataFileFilter < ActiveRecord::Base
     self.save!
   end
   
+  def clashes options={}    
+    
+    if options[:include_deactivated]
+      base = DataFileFilter
+    else
+      base = DataFileFilter.active
+    end
+    
+    if self.negative
+      base.positive.select{ |d| self.expression_clash?(d) }
+    else
+      base.negative.select{ |d| d.expression_clash?(self) }
+    end
+  end
+  
   # Determines if the expressions clash
   def expression_clash? other
     my_expression    = parsed_expression
@@ -95,9 +110,7 @@ class DataFileFilter < ActiveRecord::Base
   # Deactivates any positive filter that matches a negative filter
   def deactivate_clashing_filters
     DataFileFilter.active.negative.each do |negative_filter|
-      DataFileFilter.active.positive.each do |positive_filter|
-        positive_filter.deactivate if negative_filter.expression_clash?(positive_filter)
-      end
+      negative_filter.clashes.map(&:deactivate)
     end
   end
   
