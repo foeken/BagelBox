@@ -11,6 +11,7 @@ class DataFilesController < ApplicationController
   
   def download    
     data_file = DataFile.find(params[:id])
+    data_file.failed = false # Reset failed flag (for retries)
     data_file.queue_to_download
     data_file.source.start_downloading
     redirect_to(data_files_path)
