@@ -73,9 +73,10 @@ class DataFileFilter < ActiveRecord::Base
   end
   
   # Returns the expression string in hash format
-  def parsed_expression
+  def parsed_expression options={}
     output = {}
     expression.scan(/(.*?):\"(.*?)\"/i).each do |label,value|
+      value = value.gsub("^0?","").gsub("$","") if value && options[:real_numbers]
       output[label.to_sym] = value
     end
     return output

@@ -98,7 +98,7 @@ class DataFile < ActiveRecord::Base
         if Setting.get("NUMBER_LABELS").split(',').include?(label.to_s)
           value = "^0?#{mt[label].to_i}$"
         else
-          value = Regex.escape(mt[label])
+          value = Regexp.escape(mt[label])
         end
         
         expression << "#{label}:\"#{value}\""

@@ -4,6 +4,9 @@
 
 - KNOWN ISSUE: Crontab sometimes doesn't stick unless I do a manual crontab -e...
 
+- KNOWN ISSUE: Sometimes the download button on a source data file fails.
+
+
 
 - More specs
 
