@@ -12,6 +12,26 @@ class DataFile < ActiveRecord::Base
   named_scope :downloading, :conditions => ["downloading = ?",true]
   named_scope :queued, :conditions => ["downloaded = ? AND failed = ? AND downloading = ?",false,false,false]
   
+  # This method checks the status of the PID inside this data file, if no PID is stored all is well.
+  # If a PID is stored but that PID is no longer alive, the data file is flagged as failed. So the queue
+  # will go on.
+  def check_download_status
+    self.reload
+    return true unless self.pid    
+    begin
+      Process.kill(0, self.pid)
+      return true
+    rescue
+      self.pid = nil
+      self.failed = true
+      self.downloading = false
+      self.downloaded  = false
+      self.save!
+      SCRAPER_LOG.error( "Download process missing for '#{self.location}': PID missing. Flagging as failed." )
+      return false
+    end
+  end
+  
   # Return the data file category based on the category of the source or if no source category is given
   # it will try to guess using the meta data.
   def category mt=nil
@@ -133,6 +153,8 @@ class DataFile < ActiveRecord::Base
     if options[:fork]
       
       p = Process.fork do
+        self.pid = p
+        self.save!
         handle_download_result( source.download(location) )
         
         if options[:follow_queue] && !source.downloading?
@@ -140,7 +162,7 @@ class DataFile < ActiveRecord::Base
           queue.first.download_in_background( :follow_queue => true ) unless queue.empty?
         end        
       end
-      
+            
       Process.detach(p)
       return p
     else
@@ -182,7 +204,7 @@ class DataFile < ActiveRecord::Base
   end
   
   # Sort the data files based on their source priority and label score
-  def self.sort data_files, labels=nil          
+  def self.sort data_files, labels=nil
     return data_files.sort_by do |d|
       [(d.source.priority.blank? ? 1000000 : d.source.priority)] + d.priority_label_score(labels)
     end
@@ -196,14 +218,17 @@ class DataFile < ActiveRecord::Base
     self.downloaded_at = nil
     self.downloading   = true
     self.failed        = false
+    self.pid           = nil
     self.save!
   end
   
   # Handle the succes/failure of a download by setting the appropiate flags
   def handle_download_result success
     self.downloading   = false
+    self.pid           = nil
         
-    if success      
+    if success
+      self.failed        = false
       self.downloaded    = true
       self.downloaded_at = DateTime.now
     else

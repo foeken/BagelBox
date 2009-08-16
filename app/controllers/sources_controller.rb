@@ -43,7 +43,8 @@ class SourcesController < ApplicationController
     data_file_attributes = YAML.load(params[:data_file]).ivars["attributes"]
     data_file_attributes.delete("changed_attributes")
     data_file = DataFile.new(data_file_attributes)
-    data_file.queue_to_download        
+    data_file.queue_to_download
+    data_file.source.start_downloading      
     redirect_to(data_files_path)    
   end
 

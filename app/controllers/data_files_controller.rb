@@ -1,7 +1,8 @@
 class DataFilesController < ApplicationController  
   def index
     @data_files = DataFile.all(:order => "downloaded_at DESC")
-
+    @data_files.each{ |d| d.check_download_status }
+    
     respond_to do |format|
       format.html # index.html.erb
       format.iphone # index.iphone.erb

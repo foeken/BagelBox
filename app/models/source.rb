@@ -21,6 +21,9 @@ class Source < ActiveRecord::Base
   end
   
   def start_downloading options={}
+    # Start by checking all the downloading files for missing PID's
+    self.data_files.downloading.each(&:check_download_status)
+    
     if self.queued || options[:force_queued]
       # Handle queue one-by-one
       if self.downloading?
