@@ -9,5 +9,5 @@
 </p>
 
 <textarea style="width:100%;" rows="30">
-<%= File.read("log/scraper_#{Date.today}.log").split(/\r?\n/).reverse.join("\n") -%>
+<%= @log_messages -%>
 </textarea>
