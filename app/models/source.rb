@@ -27,7 +27,7 @@ class Source < ActiveRecord::Base
     if self.queued || options[:force_queued]
       # Handle queue one-by-one
       if self.downloading?
-        SCRAPER_LOG.error( "Skipped download start for '#{self.name}': Source is already downloading." )
+        SCRAPER_LOG.info( "Skipped download start for '#{self.name}': Source is already downloading." )
       elsif !self.data_files.queued.empty? 
         self.data_files.queued.first.download_in_background( :follow_queue => true )
       end
