@@ -1,6 +1,6 @@
 class AddMoreSettings < ActiveRecord::Migration
   def self.up
-    Setting.create!( :key => "DEFAULT_SCRAPE_INTERVAL", :description => "Default scrape interval", :value => "300" )
+    Setting.create!( :key => "DEFAULT_SCRAPE_INTERVAL", :description => "Default scrape interval", :value => "600" )
     remove_column :sources, :scrape_interval
     add_column :sources, :scrape_interval, :integer
     Source.all.map{ |s| s.update_attribute(:priority_labels,'') }

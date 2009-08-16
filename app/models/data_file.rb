@@ -78,7 +78,7 @@ class DataFile < ActiveRecord::Base
         if Setting.get("NUMBER_LABELS").split(',').include?(label.to_s)
           value = "^0?#{mt[label].to_i}$"
         else
-          value = mt[label]
+          value = Regex.escape(mt[label])
         end
         
         expression << "#{label}:\"#{value}\""
@@ -174,7 +174,7 @@ class DataFile < ActiveRecord::Base
       selected_priority_labels.each do |label|
        definition = data_type.get_definition(label.upcase.strip)
        if definition
-         output << definition.split('|').index( mt[label.to_sym] ) || 1000
+         output << definition.split('|').index( mt[label.to_sym] ) || 1000000
        end
       end
     end
@@ -182,8 +182,11 @@ class DataFile < ActiveRecord::Base
   end
   
   # Sort the data files based on their source priority and label score
-  def self.sort data_files, labels=nil
-    return data_files.sort_by{ |d| [d.source.priority] + d.priority_label_score(labels) }
+  def self.sort data_files, labels=nil          
+    return data_files.sort_by do |d|      
+      y "#{d.filename}: [#{([(d.source.priority.blank? ? 1000000 : d.source.priority)] + d.priority_label_score(labels)).join(',')}]"
+      [(d.source.priority.blank? ? 1000000 : d.source.priority)] + d.priority_label_score(labels)
+    end
   end
   
   private

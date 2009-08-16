@@ -5,9 +5,13 @@ class Scraper
   end
   
   def self.run options={}
-    SCRAPER_LOG.info( "Started scraping run" )        
-    gather_filters(options)
-    filter_and_download(options)
+    begin
+      SCRAPER_LOG.info( "Started scraping run" )        
+      gather_filters(options)
+      filter_and_download(options)
+    rescue Exception => e
+      SCRAPER_LOG.error( "Scraping run failed: #{e.message}" )        
+    end
   end
   
   # Run through the various defined sources and scrape them for content to download.
@@ -42,7 +46,7 @@ class Scraper
         SCRAPER_LOG.info( "Single match for '#{filter.to_s}' on #{data_file_group.first.source.name}" )
         selected_data_file = data_file_group.first                        
       else        
-        SCRAPER_LOG.info( "Multiple matches for '#{filter.to_s}' on #{data_file_group.collect{ |s| s.source.name }.to_sentence}" )
+        SCRAPER_LOG.info( "Multiple matches for '#{filter.to_s}' on #{data_file_group.collect{ |s| "#{s.source.name} (#{s.filename})" }.to_sentence}" )
         
         sorted_data_file_group = DataFile.sort(data_file_group)
         selected_data_file = sorted_data_file_group.first
@@ -90,12 +94,12 @@ class Scraper
               data_file_filter.save!
               SCRAPER_LOG.info( "Created new filter from '#{data_file.source.name}': #{data_file_filter.to_s}" )
             else
-              SCRAPER_LOG.info( "Skipped new filter from '#{data_file.source.name}', no match" )
+              SCRAPER_LOG.info( "Skipped new filter from '#{data_file.source.name}', no match: #{data_file.filename}" )
             end
           end
         rescue
-          SCRAPER_LOG.info( "Skipped new filter from '#{data_file.source.name}': #{data_file_filter.to_s}" )
           # Some filters might not be allowed (blank expressions, etc..) We don't care.
+          SCRAPER_LOG.info( "Skipped new filter from '#{data_file.source.name}': #{data_file_filter.to_s}" )          
         end
       end
     end
