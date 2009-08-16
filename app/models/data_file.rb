@@ -178,13 +178,12 @@ class DataFile < ActiveRecord::Base
        end
       end
     end
-    return output
+    return output.compact
   end
   
   # Sort the data files based on their source priority and label score
   def self.sort data_files, labels=nil          
-    return data_files.sort_by do |d|      
-      y "#{d.filename}: [#{([(d.source.priority.blank? ? 1000000 : d.source.priority)] + d.priority_label_score(labels)).join(',')}]"
+    return data_files.sort_by do |d|
       [(d.source.priority.blank? ? 1000000 : d.source.priority)] + d.priority_label_score(labels)
     end
   end
