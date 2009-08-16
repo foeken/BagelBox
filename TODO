@@ -4,6 +4,8 @@ BagelBox is far from finished, it needs real world testing and more polish...
 
 - More specs
 
+- View amount of MB downloaded
+
 - Better generated filter names (based on meta data)
 
 - KNOWN ISSUE: if you have a generic filter it will only match once per scraper run, even if there are multiple matching options.
@@ -18,7 +20,7 @@ BagelBox is far from finished, it needs real world testing and more polish...
 
 - Make sure current UI is cross-browser
 
-- iPhone specific interface for adding/enabling filters and watching downloads
+- iPhone specific interface for adding/enabling filters
 
 - Handle failed downloads gracefully, make sure they are not matched again?
 

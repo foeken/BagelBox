@@ -8,9 +8,7 @@
   This page shows the current state of this source. It shows the content and if it could be parsed.
   If a content title could not be parsed correctly you can try adapting the file type's meta matcher.
   <br/><br/>
-  The status field indicates whether there is a content match with one or more filters. The content can
-  be accepted or rejected, there can also be no match. The matcher column states the meta matcher line 
-  that was used to parse the content.
+  The matcher column states the meta matcher line that was used to parse the content.
   <br/><br/>
   Click parsed content to see the meta data results.
 </p>
@@ -29,7 +27,6 @@
       
       <% data_file.write_attribute(:changed_attributes,{}) %>
       <% mt     = data_file.meta_data   %>
-      <% status = @source.filter_source ? [nil,nil] : data_file.run_filters %>
     
       <tr 
         <% if mt[:matcher] %>
@@ -38,10 +35,9 @@
           title="Content could not be matched by any meta matcher."
         <% end %> 
         
-        class="<%= mt[:matcher] ? "recognized #{status.first}" : "not_recognized #{status.first}" %>">
-        <% if !@source.filter_source %>
-          <td title="<%=h status.last.map(&:name).to_sentence %>"><%=h status.first %> (<%=h status.last.length %>)</td>
-        <% elsif data_file.data_file_filter %>
+        class="<%= mt[:matcher] ? "recognized" : "not_recognized" %>">
+
+        <% if data_file.data_file_filter %>
           <td><%= link_to "Filter", data_file_filter_path(data_file.data_file_filter) %></td>
         <% else %>
           <td>&nbsp;</td>
