@@ -52,9 +52,8 @@ class Scraper
         selected_data_file = sorted_data_file_group.first
         SCRAPER_LOG.info( "Selected match with highest priority: #{sorted_data_file_group.first.source.name}" )                        
       end
-      
-      selected_data_file.download_in_background
-      # selected_data_file.queue_to_download
+            
+      selected_data_file.queue_to_download
       
       begin
         dff = selected_data_file.to_date_file_filter
