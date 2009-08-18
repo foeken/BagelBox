@@ -5,7 +5,7 @@ Before we get started: to use BagelBox you need to install the 'wget' utility. I
 Make sure you have sqlite installed. OSX comes pre-installed, on ubuntu 9.04:
 'sudo apt-get install sqlite3'
 'sudo apt-get install libsqlite3-ruby'
-'sudo gem install sqlite-ruby'
+'sudo gem install sqlite3-ruby'
 
 Now we migrate the database: 'rake db:migrate RAILS_ENV=production'
 Now start the BagelBox server using: 'script/server -e production'
@@ -17,29 +17,29 @@ The goal of this application is to help you get the content you want without act
 downloading it.
 
 You can set up several sources of content. A content source provides us with stuff to download.
-Examples could be Pirate Bay, Demonoid or someone's ftp site.   
+Examples could be Pirate Bay, Demonoid or someone's ftp site.
 
 Content can be 'scraped' (gathered) from different
 kinds of sources. At the moment RSS, FTP and Directory sources are supported.
-I took the liberty to set up some default sources for you to get started.  
+I took the liberty to set up some default sources for you to get started.
 
 == Filtering content
 
-You probably don't want to download everything from every source so we'll have to filter what you want and 
+You probably don't want to download everything from every source so we'll have to filter what you want and
 what you don't want. We are going to set up filters for this purpose.
 
 A filter looks at the offered content and determines if you might want it or not. I added a default filter for
 you that states you do *not* want TS or CAM files. Who watches those anyway?
 
-You can add very specific filters that say you want 'episode 1 of season 1 of the X-Files' or very 
+You can add very specific filters that say you want 'episode 1 of season 1 of the X-Files' or very
 generic filters like 'Every episode of desperate housewives'.
 
 In the latter case you might not want the episodes you already have, so you can add negative filters too.
-These filters are exactly the same except when they match the content is rejected.  
+These filters are exactly the same except when they match the content is rejected.
 
 == Building filters automatically
 
-We both know you are lazy and don't want to set these filters up manually. Who can blame you! 
+We both know you are lazy and don't want to set these filters up manually. Who can blame you!
 Besides content sources we also have filter sources. These sources generate filters.
 
 You can have positive filter sources like the RSS stream from myepisodes.com or negative sources like
