@@ -2,9 +2,15 @@ class DataFileFiltersController < ApplicationController
   # GET /data_file_filters
   # GET /data_file_filters.xml
   def index
-    @data_file_filters           = DataFileFilter.all( :order => "active,negative,name" )    
-    @manually_added_filters      = @data_file_filters.select{ |x| x.source_id.nil? }
-    @automatically_added_filters = @data_file_filters.reject{ |x| x.source_id.nil? }
+    if params[:show_all]
+      @manually_added_filters      = DataFileFilter.all( :conditions => 'source_id IS NULL', :order => "active,negative,name" )
+      @automatically_added_filters = DataFileFilter.all( :conditions => 'source_id IS NOT NULL', :order => "active,negative,name" )
+    else
+      @manually_added_filters      = DataFileFilter.active.find( :all, :conditions => 'source_id IS NULL', :order => "negative,name" )
+      @automatically_added_filters = DataFileFilter.active.positive.find( :all, :conditions => 'source_id IS NOT NULL', :order => "negative,name" )
+    end
+    
+    @data_file_filters = @manually_added_filters + @automatically_added_filters
     
     respond_to do |format|
       format.html # index.html.erb

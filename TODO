@@ -14,9 +14,9 @@
 
 - View amount of MB downloaded (or other kind of progress)
 
-- Better generated filter names (based on meta data)
+- Sort downloads. Show when it was downloaded
 
-- Group filters by category, title, season, episode
+- Hide negatrive / disabled filters with a checkbox
 
 - Contemplate replacing cron with the new whenever gem
 

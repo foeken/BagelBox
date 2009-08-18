@@ -2,86 +2,76 @@
   What should we look for?
 <% end %>
 
-<h2 style="background: #eee; padding: 5px; line-height: 30px; text-align: center; clear: both;">
-  Manually added
-</h2>
-
-<div style="float: left; padding:1%; width: 98%">
-  <table class="data_file_filter_table">
+<table border="0" cellspacing="5" cellpadding="5" style="width: 100%">
+    <tr>
+      <td colspan="4" style="font-weight: bold; font-size: 20pt; border-bottom: 1px solid #ddd;">Manually added filters</td>
+    </tr>
   <% @manually_added_filters.each do |data_file_filter| %>
     <tr>
-      <td><%= link_to h(data_file_filter.name), edit_data_file_filter_path(data_file_filter) %></td>
+      <td style="padding-left: 20px;"><%= link_to h(data_file_filter.name), edit_data_file_filter_path(data_file_filter) %></td>
       <td width="20" style="text-align:center"><%= data_file_filter.negative ? image_tag("checkmark.png") : "&nbsp;" %></td>
       <td width="40" style="text-align:center;"><small><i><%= data_file_filter.active ? "Enabled" : "<font color='crimson'>Disabled</font>" %></i></small></td>    
-      <td width="40" style="text-align:right; padding-right: 10px;"><%= link_to image_tag('folder-trash.png'), data_file_filter, :confirm => 'Are you sure?', :method => :delete, :class=>'remove_link' %></td>
+      <td width="20" style="text-align:right; padding-right: 10px;"><%= link_to image_tag('folder-trash.png'), data_file_filter, :confirm => 'Are you sure?', :method => :delete, :class=>'remove_link' %></td>
     </tr>
   <% end %>
-  </table>
-</div>
-
-<p style="text-align: right; clear:both;">
-<div class="button right"><%= link_to 'Add a new filter', new_data_file_filter_path %></div>
-</p>
-
-<br/><br/>
-
-<% if @automatically_added_filters.length > 0 %>
-
-<% grouped_category_filters = @automatically_added_filters.group_by{ |f| f.parsed_expression[:category] } %>
-<% grouped_category_filters.keys.sort.each do |category| %>
-  <% category_filters = grouped_category_filters[category] %>
-      
-  <% if category == "tv_show" %>
   
-    <h2 style="background: #eee; padding: 5px; line-height: 30px; text-align: center; clear: both;">Tv shows</h2>
-  
-    <% grouped_title_filters = category_filters.group_by{ |f| Regexp.unescape(f.parsed_expression[:title].downcase.titleize) } %>
-    <% grouped_title_filters.keys.sort.each do |title| %>
-      <% title_filters = grouped_title_filters[title] %>
-      <div style="float: left; margin:1.2%; min-height: 250px; width: 31%;">
-        <h3 style="background: #eee; padding: 5px; line-height: 30px; text-align: center; margin: 0px"><%= title %></h3>
-      
-        <% grouped_season_filters = title_filters.group_by{ |f| f.parsed_expression(:real_numbers => true)[:season].to_i } %>
-        <% grouped_season_filters.keys.sort.each do |season| %>
-          <% filters = grouped_season_filters[season] %>
-          <h4>Season <%= season %></h4>
-      
-          <table style="width: 100%;">
-          <% filters.sort_by{ |f| f.parsed_expression(:real_numbers=>true)[:episode].to_i }.each do |filter| %>
-            <tr title="<%= filter.source.name %>">              
-              <td><%= link_to "Episode #{filter.parsed_expression(:real_numbers=>true)[:episode]}", edit_data_file_filter_path(filter) %></td>
-              <td width="20" style="text-align:center"><%= filter.negative ? image_tag("checkmark.png") : "&nbsp;" %></td>
-              <td width="50" style="text-align:center"><small><i><%= filter.active ? "Enabled" : "<font color='crimson'>Disabled</font>" %></i></small></td>              
-              <td width="50" style="text-align:right; padding-right: 10px;"><%= link_to image_tag('folder-trash.png'), filter, :confirm => 'Are you sure?', :method => :delete, :class=>'remove_link' %></td>
+  <% if @automatically_added_filters.length > 0 %>
+
+  <% grouped_category_filters = @automatically_added_filters.group_by{ |f| f.parsed_expression[:category] } %>
+  <% grouped_category_filters.keys.sort.each do |category| %>
+    <% category_filters = grouped_category_filters[category] %>
+
+    <% if category == "tv_show" %>
+
+      <tr>
+        <td colspan="4" style="font-weight: bold; font-size: 20pt; padding-top: 50px; border-bottom: 1px solid #ddd;">Tv shows</td>
+      </tr>
+
+      <% grouped_title_filters = category_filters.group_by{ |f| Regexp.unescape(f.parsed_expression[:title].downcase.titleize) } %>
+      <% grouped_title_filters.keys.sort.each do |title| %>
+        <% title_filters = grouped_title_filters[title] %>
+          <tr>
+            <td colspan="4" style="font-weight: bold; padding-left: 20px;"><%= title %></td>
+          </tr>
+          
+          <% grouped_season_filters = title_filters.group_by{ |f| f.parsed_expression(:real_numbers => true)[:season].to_i } %>
+          <% grouped_season_filters.keys.sort.each do |season| %>
+            <% filters = grouped_season_filters[season] %>
+            <tr>
+              <td colspan="4" style="font-weight: bold; padding-left: 40px;">Season <%= season %></td>
             </tr>
+
+            <% filters.sort_by{ |f| f.parsed_expression(:real_numbers=>true)[:episode].to_i }.each do |filter| %>
+              <tr title="<%= filter.source.name %>">              
+                <td style="padding-left: 60px;"><%= link_to "Episode #{filter.parsed_expression(:real_numbers=>true)[:episode]}", edit_data_file_filter_path(filter) %></td>
+                <td width="20" style="text-align:center"><%= filter.negative ? image_tag("checkmark.png") : "&nbsp;" %></td>
+                <td width="50" style="text-align:center"><small><i><%= filter.active ? "Enabled" : "<font color='crimson'>Disabled</font>" %></i></small></td>              
+                <td width="20" style="text-align:right; padding-right: 10px;"><%= link_to image_tag('folder-trash.png'), filter, :confirm => 'Are you sure?', :method => :delete, :class=>'remove_link' %></td>
+              </tr>
+            <% end %>
           <% end %>
-          </table>
+      <% end %>
+
+    <% elsif category == "movie" %>
       
-        <% end %>
-      </div>
-    <% end %>
-  
-  <% elsif category == "movie" %>
-  
-    <h2 style="background: #eee; padding: 5px; line-height: 30px; text-align: center; clear: both;">Movies</h2>
-    
-    <div style="float: left; padding:1%; width: 98%">
-      <table style="width: 100%;">
+      <tr>
+        <td colspan="4" style="font-weight: bold; font-size: 20pt; padding-top: 50px; border-bottom: 1px solid #ddd;">Movies</td>
+      </tr>
+
       <% category_filters.sort_by{ |f| f.parsed_expression[:title] }.each do |filter| %>
         <tr title="<%= filter.source.name %>">          
-          <td><%= link_to Regexp.unescape(filter.parsed_expression(:real_numbers=>true)[:title]), edit_data_file_filter_path(filter) %></td>
+          <td style="padding-left: 20px;"><%= link_to Regexp.unescape(filter.parsed_expression(:real_numbers=>true)[:title]), edit_data_file_filter_path(filter) %></td>
           <td width="20" style="text-align:center"><%= filter.negative ? image_tag("checkmark.png") : "&nbsp;" %></td>
           <td width="50" style="text-align:center"><small><i><%= filter.active ? "Enabled" : "<font color='crimson'>Disabled</font>" %></i></small></td>
-          <td width="50" style="text-align:right; padding-right: 10px;"><%= link_to image_tag('folder-trash.png'), filter, :confirm => 'Are you sure?', :method => :delete, :class=>'remove_link' %></td>
+          <td width="20" style="text-align:right; padding-right: 10px;"><%= link_to image_tag('folder-trash.png'), filter, :confirm => 'Are you sure?', :method => :delete, :class=>'remove_link' %></td>
         </tr>
       <% end %>
-      </table>
-    </div>
-  
+
+    <% end %>
+
   <% end %>
-  
-<% end %>
+    <% end %>
+      
+</table>
 
 <br style="clear: both;"/>
-
-<% end %>
