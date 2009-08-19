@@ -9,74 +9,74 @@
 	
 	<style type="text/css">
 		body {
-  		margin-top: 1.0em;
-  		background-color: #3cfe83;
-		  font-family: "helvetica"; 
-  		color: #000000;
+		  font-family: "Myriad Pro", "helvetica"; 
+  		background: url('images/background.png');
+  		background-repeat: repeat-x;
+  		background-color: #979797;
+  		margin: 0px;
+  		padding: 0px;
+  		color: #fff;
     }
+    
+    #imac {
+      float:right;
+    }
+    
+    #logo {
+      float: left;
+      margin: 60px;
+    }
+    
     #container {
-      margin: 0 auto;
-      width: 700px;
+      padding: 60px 40px 100px 40px;
+      clear: left;
     }
-		h1 { font-size: 3.8em; color: #c3017c; margin-bottom: 3px; }
-		h1 .small { font-size: 0.4em; }
-		h1 a { text-decoration: none }
-		h2 { font-size: 1.5em; color: #c3017c; }
-    h3 { text-align: center; color: #c3017c; }
-    a { color: #c3017c; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-    .download { float: right; }
-		pre { background: #000; color: #fff; padding: 15px;}
-    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-    .footer { text-align:center; padding-top:30px; font-style: italic; }
+        
 	</style>
 	
 </head>
 
 <body>
-  <a href="http://github.com/foeken/BagelBox"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+  
+  <div id="logo">
+    <a href="http://www.github.com/foeken/bagelbox"><img src="images/logo.png" border="0"/></a>
+  </div>
+  
+  <div id="imac">
+    <img src="images/imac.png"/>
+  </div>
   
   <div id="container">
+    
+    <p>
+      Fill your media need easily and fast. BagelBox downloads the<br/> 
+      stuff you want the day it is released. It automatically scrapes FTP, <br/>
+      Torrent and Directory sources for content.<br/> 
+      
+      <br/>
 
+      Specify what you want manually by adding filters or automatically<br/> 
+      by scraping RSS feeds like the ones from myepisodes.com.<br/> 
+      
+      <br/> 
+      
+      And best of all. It’s free. Oh and I trew in an iPhone UI too!<br/> 
+      
+      <br/> 
+      
+      André Foeken  
+      
+      <br/>
+      <br/>
+    </p>
+    
     <div class="download">
       <a href="http://github.com/foeken/BagelBox/zipball/master">
         <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
       <a href="http://github.com/foeken/BagelBox/tarball/master">
         <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
     </div>
-      
-    <h1><a href="http://github.com/foeken/BagelBox">BagelBox</a> 
-      <span class="small">by <a href="http://github.com/foeken">foeken</a></span></h1>
-
-    <div class="description">
-      Scrape torrent sites and ftp sites for downloadable (media) content.
-    </div>
-
-    <h2>Install</h2>
-<p>Download, make sure you have wget, run the server. rake scraper:install to install timed scraping.</p>
-<h2>License</h2>
-<p>MIT</p>
-<h2>Authors</h2>
-<p>Andre Foeken (afoeken@mac.com)<br/><br/>      </p>
-<h2>Contact</h2>
-<p>Andre Foeken (afoeken@mac.com)<br/>      </p>
-
-
-    <h2>Download</h2>
-    <p>
-      You can download this project in either
-      <a href="http://github.com/foeken/BagelBox/zipball/master">zip</a> or
-      <a href="http://github.com/foeken/BagelBox/tarball/master">tar</a> formats.
-    </p>
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <pre>$ git clone git://github.com/foeken/BagelBox</pre>
-    </p>
-      
-    <div class="footer">
-      get the source code on GitHub : <a href="http://github.com/foeken/BagelBox">foeken/BagelBox</a>
-    </div>
-    
+          
   </div>
 
   
