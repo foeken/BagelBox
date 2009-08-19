@@ -15,6 +15,12 @@
     </tr>
   <% end %>
   
+  <tr>
+    <td colspan="4">
+      <div class="button right"><%= link_to 'Add new filter', new_data_file_filter_path %></div><br/>  
+    </td>
+  </tr>
+  
   <% if @automatically_added_filters.length > 0 %>
 
   <% grouped_category_filters = @automatically_added_filters.group_by{ |f| f.parsed_expression[:category] } %>
